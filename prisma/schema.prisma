@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  password String
+}
+
+model stroke {
+  strokeno  String     @id @map("_id")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  contract  contract[]
+}
+
+model contract {
+  constractno String      @id @map("_id")
+  season      String
+  stroke_desc String
+  prodesc     String
+  tdept       String
+  stroke      stroke      @relation(fields: [stroke_id], references: [strokeno])
+  stroke_id   String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  carelabel   carelabel[]
+  art         art[]
+}
+
+model carelabel {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  ref_no      String
+  wash_symbol String
+  fibre       String
+  zoordes     String
+  mpart_fw    String
+  coo         String
+  caretext    String
+  contract    contract     @relation(fields: [contract_id], references: [constractno])
+  contract_id String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  otherlabel  otherlabel[]
+}
+
+model otherlabel {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  fef_no       String
+  label_type   String
+  carelabel    carelabel @relation(fields: [carelabel_id], references: [id])
+  carelabel_id String    @db.ObjectId
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  contity      contity[]
+}
+
+model contity {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  color_code     String
+  color_name     String
+  upc_no         String
+  primary_size   String
+  secondary_size String
+  selling_price  Float
+  order_qty      String
+  otherlabel     otherlabel @relation(fields: [otherlabel_id], references: [id])
+  otherlabel_id  String     @db.ObjectId
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model image {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  data Bytes
+}
+
+model art {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  contract    contract @relation(fields: [contract_id], references: [constractno])
+  contract_id String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+//xml upload settings
+model label {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  date        String
+  time        String
+  recordcount String
+  runnumber   String
+  strokes     strokexml[]
+}
+
+model strokexml {
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  datelastmodified  String
+  strokenumber      String
+  strokedescription String
+  contractnumber    String
+  constractstatus   String
+  departmentnumber  String
+  season            String
+  supplierseries    String
+  countrycode       String
+  factorycode       String
+  productdesc       String
+  strokelabels      strokelabel[]
+  colours           colour[]
+  label             label         @relation(fields: [labelid], references: [id])
+  labelid           String        @db.ObjectId
+}
+
+model strokelabel {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  labelref      String
+  labelcategory String
+  labeltype     String
+  labelorder    String
+  setname       String
+  stroke        strokexml @relation(fields: [strokeid], references: [id])
+  strokeid      String    @db.ObjectId
+}
+
+model colour {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  colourname        String
+  colourdescription String
+  storydescription  String
+  stroke            strokexml @relation(fields: [strokeid], references: [id])
+  strokeid          String    @db.ObjectId
+  sizes             size[]
+}
+
+model size {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  primarysize String
+  colour      colour @relation(fields: [colourid], references: [id])
+  colourid    String @db.ObjectId
+  upcs        upc[]
+}
+
+model upc {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  upcnumber     String
+  secondarysize String
+  sellingprice  String
+  size          size   @relation(fields: [sizeid], references: [id])
+  sizeid        String @db.ObjectId
+}
