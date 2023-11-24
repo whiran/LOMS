@@ -1,0 +1,30 @@
+name: CLCD
+
+on: 
+  push:
+    branches:
+     - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: login to docer hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} 
+      - name: build docker image
+        run: docker build -t nalindu/aaa .
+      - name: Publish image to docker hub
+        run: docker push nalindu/aaa:latest
+  deploy:
+    needs: build
+    runs-on: [aws-ec2]  
+    steps:
+      - name: pull image from docker hub
+        run: docker pull nalindu/aaa:latest
+      - name: Delete old container
+        run: docker rm -f aaa-container
+      - name: Run docker continer
+        run: docker run -d -p 80:80 --name aaa-container nalindu/aaa
