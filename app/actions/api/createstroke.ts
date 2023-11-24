@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma";
 
+//create a stroke 
+
 
 export const createstroke =async (strokeno: string) => {
   const stroke = await prisma.stroke.findUnique({

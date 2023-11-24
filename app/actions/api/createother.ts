@@ -1,6 +1,8 @@
 'use server';
 import prisma from "@/lib/prisma";
 
+//crete other label
+
 export const createother = async (refno: string, labeltype: string, state2: string) => {
  
    if(refno && labeltype && state2){

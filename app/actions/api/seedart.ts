@@ -1,3 +1,5 @@
+//this code run seperatly to add data to art table to test case
+//untill the web service work
 const { PrismaClient } = require('@prisma/client'); // Import Prisma using CommonJS syntax
 
 const prisma = new PrismaClient();

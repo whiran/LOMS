@@ -1,6 +1,8 @@
 'use server';
 import prisma from "@/lib/prisma";
 
+//create care tabel records
+
 export const createcare = async (refno: string, washsymbol: string, fibre: string, zoordes: string, mpart: string, coo: string, caretext: string, state1: string) => {
  
    if(refno && washsymbol && fibre && zoordes && mpart && coo && caretext && state1){

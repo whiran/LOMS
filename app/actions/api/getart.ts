@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma";
 
+//get the artwork numbers
+
 
 export const getart = async(contractno: string) => {
   const arts = await prisma.art.findMany({

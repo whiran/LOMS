@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma";
 
+//create the main label
+
 export const createlabel = async(date: string, time: string, recordcount: string, runnumber:string) =>{
 
   let createdLabel;
