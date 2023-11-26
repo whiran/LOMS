@@ -1,4 +1,4 @@
-'use client'
+/*'use client'
 import React from 'react'
 import { Line } from 'react-chartjs-2';
 import {
@@ -88,4 +88,4 @@ const Allbarchart = (props: Props) => {
   )
 }
 
-export default Allbarchart
+export default Allbarchart*/

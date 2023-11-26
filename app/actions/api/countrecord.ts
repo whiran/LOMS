@@ -1,6 +1,8 @@
 'use server'
 import prisma from "@/lib/prisma";
 
+//count the total records
+
 export async function getcontractcount() {
   try {
     const totalRecords = await prisma.contract.count();
