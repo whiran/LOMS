@@ -9,6 +9,8 @@ import Quantity from "@/components/Quantity";
 
 const Page = () => {
 
+  //main dashbord to view and add data to the stroke, contract, care, other
+
   return (
   <div className="h-full">
     <div className="h-[9vh]">

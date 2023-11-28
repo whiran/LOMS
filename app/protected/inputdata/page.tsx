@@ -6,6 +6,9 @@ import React from 'react'
 type Props = {}
 
 const page = (props: Props) => {
+
+  //upload the xml file to server 
+  
   return (
     <div>
       <div className='h-screen flex flex-col'>

@@ -10,10 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRoles {
+  admin
+  user
+  manager
+  company
+}
+
 model user {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String @unique
-  password String
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  email     String    @unique
+  password  String
+  role      UserRoles @default(user)
+  companies company[]
 }
 
 model stroke {
@@ -157,4 +166,54 @@ model upc {
   sellingprice  String
   size          size   @relation(fields: [sizeid], references: [id])
   sizeid        String @db.ObjectId
+}
+
+model order {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  coo        String
+  fiber      String
+  component  String
+  caretext   String
+  washsimbol String
+  sizeration String
+  state      state      @default(pending)
+  orderqtys  orderqty[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  ordervalue Int?
+}
+
+model company {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstname String
+  lastname  String
+  bname     String
+  pnum      String
+  sa        String
+  sl        String
+  city      String
+  post      String
+  country   String
+  region    String
+  email     String
+  password  String
+  user      user?    @relation(fields: [userid], references: [id])
+  userid    String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum state {
+  pending
+  processing
+  completed
+}
+
+model orderqty {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  qty       Int
+  order     order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

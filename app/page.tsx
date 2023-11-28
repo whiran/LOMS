@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Mainnavbar from '@/components/Mainnavbar'
 
+//main page
+
 export default function Home() {
   return (
    <div className='h-screen bg-slate-100'>

@@ -6,7 +6,8 @@ type Props = {}
 
 const page = async (props: Props) => {
   
-
+  //msi report view
+  
   return (
     <div className="h-full ">
       <Mainnavbar />

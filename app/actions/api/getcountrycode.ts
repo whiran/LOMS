@@ -3,6 +3,8 @@
 
 import prisma from '@/lib/prisma';
 
+//get the total count by country code 
+
 export async function getTotalCountByCountryCode(): Promise<{ countryCode: string; count: number }[]> {
   const result = await prisma.strokexml.groupBy({
     by: ['countrycode'],

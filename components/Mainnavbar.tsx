@@ -51,6 +51,7 @@ const Mainnavbar = async () => {
           <>
           <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signup'>Signup</Link>
           <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signin'>Signin</Link>
+          <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/company'>Company Register</Link>
           </>
         )}
         

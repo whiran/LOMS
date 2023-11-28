@@ -3,6 +3,10 @@
 import prisma from "@/lib/prisma"
 import bcrypt from 'bcryptjs'
 
+
+//sign up code
+//user give the email and password
+
 export const signup = async ( email:string, password: string) => {
   const user = await prisma.user.findUnique({
     where: {

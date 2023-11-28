@@ -3,6 +3,8 @@
 
 import prisma from '@/lib/prisma';
 
+//get the month and return it group to show them in a chart
+
 async function groupDataByMonth(data: any[]) {
   const monthsData: { [key: number]: number } = {};
 
