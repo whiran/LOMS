@@ -30,8 +30,8 @@ const Dashord = (props: Props) => {
   },[])
 
   return (
-    <div className='flex flex-col w-full h-full'>
-      <div className='flex flex-row w-full bg-slate-400 justify-around'>
+    <div className='flex flex-col w-full h-screen bg-slate-200'>
+      <div className='flex flex-row w-full  bg-slate-400 justify-around'>
 
 
         <div className='flex flex-col w-1/5 h-32  m-2'>
@@ -46,7 +46,7 @@ const Dashord = (props: Props) => {
               </div>
             </div>
           </div>
-          <Link href='' className='bg-sky-400 h-2/5'>
+          <Link href='' className='bg-sky-600 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
@@ -64,7 +64,7 @@ const Dashord = (props: Props) => {
               </div>
             </div>
           </div>
-          <Link href='' className='bg-sky-400 h-2/5'>
+          <Link href='' className='bg-green-500 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
@@ -99,7 +99,7 @@ const Dashord = (props: Props) => {
               </div>
             </div>
           </div>
-          <Link href='' className='bg-sky-400 h-2/5'>
+          <Link href='' className='bg-rose-400 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
