@@ -7,7 +7,7 @@ type Props = {}
 
 const page = (props: Props) => {
   return (
-    <div className='flex justify-center items-center bg-state-50 w-full h-full'>
+    <div className='flex flex-col bg-zinc-600 h-screen justify-center items-center'>
       <div className='w-3/6'>
        <ComReg />
       </div>

@@ -1,14 +1,20 @@
-import React from 'react'
-import Orderqty from '@/components/Orderqty'
+
+
 import { getorders } from '@/app/actions/api/getorders';
+import Orderlits from '@/components/Orderlits';
+import Pdfviewon from '@/components/Pdfviewon'
+import React from 'react'
+
 type Props = {}
+
+
 
 const page = async (props: Props) => {
   const fetcheddata = await getorders();
   
   return (
     <div className='flex justify-center items-center h-screen'>
-      <Orderqty orders={fetcheddata}/>
+      <Orderlits orders={fetcheddata} />
     </div>
   )
 }

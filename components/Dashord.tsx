@@ -4,34 +4,20 @@ import React, { useEffect, useState } from 'react'
 import { BarChartBig, FileBarChart, CalendarCheck2 ,  CircleEllipsis, ChevronRight } from 'lucide-react'
 import { getordercomplete, getorderpending, getorderprocessing, totalcount } from '@/app/actions/api/countorders'
 
-type Props = {}
+type MyComponentProps = {
+  processCount: number;
+  pendingCount: number;
+  completeCount: number;
+  totalCount: number;
+};
 
-const Dashord = (props: Props) => {
-  const [processCount, setProcessCount] = useState<number>(0);
-  const [pendingCount, setPendingCount] = useState<number>(0);
-  const [completeCount, setCompleteCount] = useState<number>(0);
-  const [totalCount, setTotalCount] = useState<number>(0);
+const Dashord = ({ processCount, pendingCount, completeCount, totalCount }:      MyComponentProps) => {
+  
 
-  useEffect(() =>{
-    const fetchthedata = async() =>{
-      const processCountData = await getorderprocessing();
-      const pendingCountData = await getorderpending();
-      const completeCountData = await getordercomplete();
-      const totalCountData = await totalcount();
-
-      console.log(processCount,pendingCount,completeCount,totalCountData);
-
-      setProcessCount(processCountData || 0);
-      setPendingCount(pendingCountData || 0);
-      setCompleteCount(completeCountData || 0);
-      setTotalCount(totalCountData || 0);
-    }
-    fetchthedata();
-  },[])
 
   return (
-    <div className='flex flex-col w-full h-screen bg-slate-200'>
-      <div className='flex flex-row w-full  bg-slate-400 justify-around'>
+    <div className='flex flex-col w-full'>
+      <div className='flex flex-row w-full  justify-around'>
 
 
         <div className='flex flex-col w-1/5 h-32  m-2'>

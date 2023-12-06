@@ -7,7 +7,12 @@ import Link from 'next/link'
 import Adoughnut from './Alldonought'
 import { groupbycontractmonth, groupbyothermonth, groupbyquantitymonth } from '@/app/actions/api/getmonth'
 
-type Props = {}
+type Props = {
+  processCount: number;
+  pendingCount: number;
+  completeCount: number;
+  totalCount: number;
+}
 
 type MonthlyData = { month: number; count: number }[]; 
 
@@ -53,43 +58,43 @@ const MISinterface = (props: Props) => {
 
 
   return (
-    <div className='flex flex-col mx-4 my-4'>
+    <div className='flex flex-col mx-4 my-4 bg-slate-100'>
       <div className='flex flex-row w-full justify-between'>
      
-      <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
-          <div className='flex flex-col'>
-            <div className='text-xs font-light text-gray-700'>Contract</div>
-            <div className='text-2xl font-bold'>{contract}</div>
-          </div>
-          <div> <Link href=''><Aperture size={48}/></Link></div>
-        </div>
-      
-      
         <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
-          <div className='flex flex-col'>
-            <div className='text-xs font-light text-gray-700'>Care</div>
-            <div className='text-2xl font-bold'>{care}</div>
+            <div className='flex flex-col'>
+              <div className='text-xs font-light text-gray-700'>Contract</div>
+              <div className='text-2xl font-bold'>{contract}</div>
+            </div>
+            <div> <Link href=''><Aperture size={48}/></Link></div>
           </div>
-          <div><Link href=''><Activity size={48} /></Link></div>
-        </div>
+      
+      
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+            <div className='flex flex-col'>
+              <div className='text-xs font-light text-gray-700'>Care</div>
+              <div className='text-2xl font-bold'>{care}</div>
+            </div>
+            <div><Link href=''><Activity size={48} /></Link></div>
+          </div>
       
      
-        <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
-          <div className='flex flex-col'>
-            <div className='text-xs font-light text-gray-700'>Other</div>
-            <div className='text-2xl font-bold'>{other}</div>
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+            <div className='flex flex-col'>
+              <div className='text-xs font-light text-gray-700'>Other</div>
+              <div className='text-2xl font-bold'>{other}</div>
+            </div>
+            <div> <Link href=''><BookText size={48} /> </Link></div>
           </div>
-          <div> <Link href=''><BookText size={48} /> </Link></div>
-        </div>
        
-       
-        <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
-          <div className='flex flex-col'>
-            <div className='text-xs font-light text-gray-700'>Quantity</div>
-            <div className='text-2xl font-bold'>{quntity}</div>
+        
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+            <div className='flex flex-col'>
+              <div className='text-xs font-light text-gray-700'>Quantity</div>
+              <div className='text-2xl font-bold'>{quntity}</div>
+            </div>
+            <div> <Link href=''><Tally4 size={48} /> </Link></div>
           </div>
-          <div> <Link href=''><Tally4 size={48} /> </Link></div>
-        </div>
       
       </div>
       <div className='flex flex-row justify-between my-4 '>
@@ -98,10 +103,14 @@ const MISinterface = (props: Props) => {
           <Adoughnut contract={contract} care={care} other={other} quntity={quntity} />
         </div>
       </div>
-      <div className='flex flex-row justify-between'>
-        <div className='bg-white p-4 w-5/12'>7</div>
-        <div className='bg-white p-4 w-6/12'>8</div>
-      </div>
+        <div className='flex flex-row justify-between'>
+          <div className='bg-white p-4 w-1/5'>8</div>
+          <div className='bg-white p-4 w-1/5'>8</div>
+          <div className='bg-white p-4 w-1/5'>8</div>
+          <div className='bg-white p-4 w-1/5'>8</div>
+        </div>
+        
+
     </div>
   )
 }
