@@ -9,6 +9,7 @@ export async function getcontractcount() {
     return(totalRecords);
   }catch(error){
     console.log(`error:`,error);
+    return 0;
   }
 }
 
@@ -18,6 +19,7 @@ export async function getcarecount() {
     return totalRecords;
   }catch(error){
     console.log(`care count error:`,error);
+    return 0;
   }
 }
 
@@ -27,6 +29,7 @@ export async function getothercount() {
     return totalRecords;
   }catch(error){
     console.log(`other count error`,error);
+    return 0;
   }
 }
 
@@ -36,6 +39,7 @@ export async function getquntitycount() {
     return totalRecords;
   }catch(error){
     console.log(`quntity count error:`, error);
+    return 0;
   }
 }
 

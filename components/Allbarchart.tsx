@@ -1,6 +1,6 @@
-/*'use client'
+'use client'
 import React from 'react'
-import { Line } from 'react-chartjs-2';
+import {  Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,9 +11,6 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import Contractdata from './Contractdata';
-import Caredata from './Caredata';
-import Otherdata from './Otherdata';
 
 
 ChartJS.register(
@@ -29,10 +26,10 @@ ChartJS.register(
 type MonthlyData = { month: number; count: number }[]; 
 
 interface Props {
-  contractdata: MonthlyData[]
-  caredata: MonthlyData[]
-  otherdata: MonthlyData[]
-  quntitydata: MonthlyData[]
+  contractdata: MonthlyData
+  caredata: MonthlyData
+  otherdata: MonthlyData
+  quntitydata: MonthlyData
 }
 
 const labels = [
@@ -57,35 +54,41 @@ export const options = {
 const Allbarchart = (props: Props) => {
 
   const { contractdata, caredata, otherdata, quntitydata } = props;
-
-  const getCountForMonth = (data: MonthlyData[], month: number): number => {
-    const monthData = data.find(item => item.month === month);
-    return monthData ? monthData.count : 0;
-  };
   
-  const contractCounts = labels.map((_, index) => getCountForMonth(contractdata, index + 1));
-
+ 
   const data = {
     labels,
     datasets: [
       {
         label: 'Contracts',
-        data: contractdata.map((contract) => contract.count ),
+        data: contractdata.map((con) => con.count),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Care',
-        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+        data: caredata.map(item => item.count),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
+      {
+        labels: 'Other',
+        data: otherdata.map(item => item.count),
+        borderColor: 'rgb(217, 235, 53)',
+        backgroundColor: 'rgba(217, 235, 53,0.5)'
+      },
+      {
+        labels: 'Quantity',
+        data: quntitydata.map(item => item.count),
+        bordercolor: 'rgb(75, 27, 247)',
+        backgroundColor: 'rgba(75, 27, 247,0.5)'
+      }
     ],
   };
   
   return (
-    <div>Allbarchart</div>
+    <Line data={data} options={options} />
   )
 }
 
-export default Allbarchart*/
+export default Allbarchart

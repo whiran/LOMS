@@ -6,56 +6,38 @@ import { getquntity } from '@/app/actions/api/getquntity'
 import Link from 'next/link'
 import Adoughnut from './Alldonought'
 import { groupbycontractmonth, groupbyothermonth, groupbyquantitymonth } from '@/app/actions/api/getmonth'
+import Caredata from './Caredata'
+import Allbarchart from './Allbarchart'
 
-type Props = {
+
+type MonthlyData = { month: number; count: number }[]; 
+
+type inputs = {
   processCount: number;
   pendingCount: number;
   completeCount: number;
   totalCount: number;
+  contractCount: number;
+  careCount: number;
+  otherCount: number;
+  quantityCount: number;
+  contractmonths: MonthlyData;
+  caremonths: MonthlyData;
+  othermonths: MonthlyData;
+  quntitymonths: MonthlyData;
 }
 
-type MonthlyData = { month: number; count: number }[]; 
 
-const MISinterface = (props: Props) => {
 
-  const [contract, setContract] = useState<number>(0);
-  const [care, setCare] = useState<number>(0);
-  const [other, setOther] = useState<number>(0);
-  const [quntity, setQuntity] = useState<number>(0);
-  const [contractMonths, setContractMonths] = useState<MonthlyData>([]);
-  const [careMonths, setCareMonths] = useState<MonthlyData>([]);
-  const [otherMonths, setOtherMonths] = useState<MonthlyData>([]);
-  const [quantityMonths, setQuantityMonths] = useState<MonthlyData>([]);
-  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const contractCount = await getcontractcount();
-        const careCount = await getcarecount();
-        const otherCount = await getothercount();
-        const quantityCount = await getquntitycount();
-        const contractmonths = await  groupbycontractmonth();
-        const caremonths = await groupbyothermonth();
-        const othermonths = await groupbyothermonth();
-        const quntitymonths = await groupbyquantitymonth();
+const MISinterface = ({processCount, pendingCount, completeCount, totalCount, contractCount, careCount, otherCount, quantityCount, contractmonths, caremonths, othermonths, quntitymonths
+}: inputs) => {
 
-        setContract(contractCount ?? 0);
-        setCare(careCount ?? 0);
-        setOther(otherCount ?? 0);
-        setQuntity(quantityCount ?? 0);
-        setContractMonths(contractmonths);
-        setCareMonths(caremonths);
-        setOtherMonths(othermonths);
-        setQuantityMonths(quntitymonths);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  console.log(contractmonths.map((con) => con.month));
 
-    fetchData();
-  }, []);
 
+
+ 
 
   return (
     <div className='flex flex-col mx-4 my-4 bg-slate-100'>
@@ -64,50 +46,66 @@ const MISinterface = (props: Props) => {
         <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Contract</div>
-              <div className='text-2xl font-bold'>{contract}</div>
+              <div className='text-2xl font-bold'>{contractCount}</div>
             </div>
-            <div> <Link href=''><Aperture size={48}/></Link></div>
+            <div> <Link href='/protected/misreport/contract'><Aperture size={48}/></Link></div>
           </div>
       
       
           <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Care</div>
-              <div className='text-2xl font-bold'>{care}</div>
+              <div className='text-2xl font-bold'>{careCount}</div>
             </div>
-            <div><Link href=''><Activity size={48} /></Link></div>
+            <div><Link href='/protected/misreport/care'><Activity size={48} /></Link></div>
           </div>
       
      
           <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Other</div>
-              <div className='text-2xl font-bold'>{other}</div>
+              <div className='text-2xl font-bold'>{otherCount}</div>
             </div>
-            <div> <Link href=''><BookText size={48} /> </Link></div>
+            <div> <Link href='/protected/misreport/other'><BookText size={48} /> </Link></div>
           </div>
        
         
           <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Quantity</div>
-              <div className='text-2xl font-bold'>{quntity}</div>
+              <div className='text-2xl font-bold'>{quantityCount}</div>
             </div>
-            <div> <Link href=''><Tally4 size={48} /> </Link></div>
+            <div> <Link href='/protected/misreport/quantity'><Tally4 size={48} /> </Link></div>
           </div>
       
       </div>
       <div className='flex flex-row justify-between my-4 '>
-        <div className='bg-white p-4 w-6/12 hover:bg-stone-50'>5</div>
+        <div className='bg-white p-4 w-6/12 hover:bg-stone-50'>
+          <Allbarchart contractdata={contractmonths} caredata={caremonths} quntitydata={quntitymonths} otherdata={othermonths}/>
+        </div>
         <div className='bg-white p-4 w-5/12 hover:bg-stone-50'>
-          <Adoughnut contract={contract} care={care} other={other} quntity={quntity} />
+          <Adoughnut contract={contractCount} care={careCount} other={otherCount} quntity={quantityCount} />
         </div>
       </div>
         <div className='flex flex-row justify-between'>
-          <div className='bg-white p-4 w-1/5'>8</div>
-          <div className='bg-white p-4 w-1/5'>8</div>
-          <div className='bg-white p-4 w-1/5'>8</div>
-          <div className='bg-white p-4 w-1/5'>8</div>
+          <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
+            <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/order'}>Total Order Count</Link></div>
+            <p className='text-center text-lg font-semibold'>{totalCount}</p>
+          </div>
+          
+          <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
+          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/process'}>Process order Count</Link></div>
+            <p className='text-center text-lg font-semibold'>{processCount}</p>
+          </div>
+        
+          <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
+          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/pending'}>Pending order Count</Link></div>
+            <p className='text-center text-lg font-semibold'>{pendingCount}</p>
+          </div>
+          <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
+          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/complete'}>Completed order Count</Link></div>
+            <p className='text-center text-lg font-semibold'>{completeCount}</p>
+          </div>
         </div>
         
 

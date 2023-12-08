@@ -3,7 +3,10 @@
 import { placeorder } from "@/app/actions/api/placeorder";
 import { useState } from "react";
 
-type Props = {}
+
+type Props = {
+  id: string;
+}
 
 const Placeorder = (props: Props) => {
   const [coo,setCoo] = useState('');
@@ -13,8 +16,12 @@ const Placeorder = (props: Props) => {
   const [washsimbol,setWashsimbol] = useState('');
   const [sizeration,setSizeration] = useState('');
   
+  
+
+  
   const handleclick = async() => {
-    const result = await placeorder(coo,fiber,component,caretext,washsimbol,sizeration);
+    const result = await placeorder(coo,fiber,component,caretext,washsimbol,sizeration,props.id);
+    console.log(props.id)
     if(result == 'ok'){
       alert('successfully aded the record');
       // Clear the form fields after successful submission

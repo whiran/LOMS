@@ -1,12 +1,16 @@
+import { getorderdata } from '@/app/actions/api/getorders'
 import Pdfviewon from '@/components/Pdfviewon'
 import React from 'react'
 
 type Props = {}
 
-const page = ({ params }: { params: { id: string } }) => {
+const page = async ({ params }: { params: { id: string } }) => {
+
+  const result = await getorderdata(params.id);
+  
   return (
     <div>
-      <Pdfviewon />
+      <Pdfviewon id={params.id} result={result}/>
     </div>
   )
 }

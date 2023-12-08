@@ -45,13 +45,20 @@ export const authOptions: AuthOptions = {
             }
             const userPassword = user.password;
 
+            const userType = user.userType;
+
             const isValidPassword = bcrypt.compareSync(password, userPassword);
 
             if(!isValidPassword){
                 return null;
             }
-
-            return user;
+           
+            return {
+                    email: user.email,
+                    id: user.id,
+                    userType: user.userType,
+                    type: user.userType,
+            };
 
             }
           })
@@ -87,28 +94,27 @@ export const authOptions: AuthOptions = {
         updateAge: 24 * 60 * 60,
       },
       callbacks: 
-            
-            {
-                async jwt(params: any) {
-                    if(params.user?.userType) {
-                        params.token.userType = params.user.userType;
-                        params.token.id = params.user.id; 
-                    
-                    }
-
-                    return params.token;
-                },
-
-                async session({ session, token}) {
-                    if(session.user) {   
-                    
-                    (session.user as {userType: string}).userType = token.userType as string;   
-                    }
-
-                    return session;
-                }
-                
+      {
+        async jwt(params: any) {
+            if(params.user?.userType) {
+                params.token.userType = params.user.userType;
+                params.token.id = params.user.id; 
+               
             }
+
+            return params.token;
+        },
+
+        async session({ session, token}) {
+            if(session.user) {   
+                session.user.id = token.id as string
+                (session.user as {userType: string}).userType = token.userType as string;   
+            }
+
+            return session;
+        }
+        
+    }
     }
 
     const handler = NextAuth(authOptions);
