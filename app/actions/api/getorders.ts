@@ -51,3 +51,52 @@ export const getcompletedorders = async () => {
   });
   return result;
 }
+
+
+//get all orders based on specific user
+
+export const getallusersorders =async (id: string) => {
+  const result = prisma.order.findMany({
+    where: {
+      userid: id
+    }
+  });
+  return result;
+}
+
+//get processing orders and specific user
+
+export const getprocessinguserorders =async (id: string) => {
+  const result = prisma.order.findMany({
+    where: {
+      userid: id,
+      state : "processing"
+    }
+  });
+  return result;
+ }
+
+ //get pending orders and specific user
+
+export const getpendinusergorders =async (id: string) => {
+  const result = prisma.order.findMany({
+    where: {
+      userid: id,
+      state:"pending"
+    }
+  });
+  return result;
+
+}
+
+//get completed orders and specific user
+
+export const getcompleteduserorders = async (id: string) => {
+  const result = prisma.order.findMany({
+    where: {
+      userid: id,
+      state: 'completed'
+    }
+  });
+  return result;
+}

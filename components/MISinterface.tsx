@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Aperture, Activity, BookText, Tally4 } from 'lucide-react'
-import { getcarecount, getcontractcount, getothercount, getquntitycount } from '@/app/actions/api/countrecord'
+
 import { getquntity } from '@/app/actions/api/getquntity'
 import Link from 'next/link'
 import Adoughnut from './Alldonought'
-import { groupbycontractmonth, groupbyothermonth, groupbyquantitymonth } from '@/app/actions/api/getmonth'
+
 import Caredata from './Caredata'
 import Allbarchart from './Allbarchart'
 
@@ -33,7 +33,7 @@ type inputs = {
 const MISinterface = ({processCount, pendingCount, completeCount, totalCount, contractCount, careCount, otherCount, quantityCount, contractmonths, caremonths, othermonths, quntitymonths
 }: inputs) => {
 
-  console.log(contractmonths.map((con) => con.month));
+  
 
 
 
@@ -43,39 +43,39 @@ const MISinterface = ({processCount, pendingCount, completeCount, totalCount, co
     <div className='flex flex-col mx-4 my-4 bg-slate-100'>
       <div className='flex flex-row w-full justify-between'>
      
-        <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+        <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-50'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Contract</div>
               <div className='text-2xl font-bold'>{contractCount}</div>
             </div>
-            <div> <Link href='/protected/misreport/contract'><Aperture size={48}/></Link></div>
+            <div> <Link href='/protected/misreport/contract'><Aperture size={48} className='hover:text-[#24ed56]'/></Link></div>
           </div>
       
       
-          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-50'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Care</div>
               <div className='text-2xl font-bold'>{careCount}</div>
             </div>
-            <div><Link href='/protected/misreport/care'><Activity size={48} /></Link></div>
+            <div><Link href='/protected/misreport/care'><Activity size={48} className='hover:text-[#24ed56]'/></Link></div>
           </div>
       
      
-          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-50'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Other</div>
               <div className='text-2xl font-bold'>{otherCount}</div>
             </div>
-            <div> <Link href='/protected/misreport/other'><BookText size={48} /> </Link></div>
+            <div> <Link href='/protected/misreport/other'><BookText size={48} className='hover:text-[#24ed56]'/> </Link></div>
           </div>
        
         
-          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-400'>
+          <div className='bg-white p-4 w-1/5 flex flex-row justify-between hover:bg-stone-50'>
             <div className='flex flex-col'>
               <div className='text-xs font-light text-gray-700'>Quantity</div>
               <div className='text-2xl font-bold'>{quantityCount}</div>
             </div>
-            <div> <Link href='/protected/misreport/quantity'><Tally4 size={48} /> </Link></div>
+            <div> <Link href='/protected/misreport/quantity'><Tally4 size={48} className='hover:text-[#24ed56]'/> </Link></div>
           </div>
       
       </div>
@@ -89,21 +89,21 @@ const MISinterface = ({processCount, pendingCount, completeCount, totalCount, co
       </div>
         <div className='flex flex-row justify-between'>
           <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
-            <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/order'}>Total Order Count</Link></div>
+            <div className='text-sm hover:text-green-600 hover:font-semibold text-center'><Link href={'/protected/misreport/order'}>Total Order Count</Link></div>
             <p className='text-center text-lg font-semibold'>{totalCount}</p>
           </div>
           
           <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
-          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/process'}>Process order Count</Link></div>
+          <div className='text-sm hover:text-green-600 hover:font-semibold text-center'><Link href={'/protected/misreport/process'}>Process order Count</Link></div>
             <p className='text-center text-lg font-semibold'>{processCount}</p>
           </div>
         
           <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
-          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/pending'}>Pending order Count</Link></div>
+          <div className='text-sm hover:text-green-600 hover:font-semibold text-center'><Link href={'/protected/misreport/pending'}>Pending order Count</Link></div>
             <p className='text-center text-lg font-semibold'>{pendingCount}</p>
           </div>
           <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
-          <div className='text-sm hover:text-green-600 hover:font-semibold'><Link href={'/protected/misreport/complete'}>Completed order Count</Link></div>
+          <div className='text-sm hover:text-green-600 hover:font-semibold text-center'><Link href={'/protected/misreport/complete'}>Completed order Count</Link></div>
             <p className='text-center text-lg font-semibold'>{completeCount}</p>
           </div>
         </div>

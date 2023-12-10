@@ -36,7 +36,7 @@ const Placeorder = (props: Props) => {
     }
   }
   return (
-    <div className=" bg-[#C5FFF8] p-6 border-4 border-white rounded-lg">
+    <div className=" bg-[#F8DFD4] p-6 border-4 border-white rounded-lg">
       <h1 className="text-xl font-bold">Place Order</h1>
         <div className="flex flex-row gap-4">
           <div className="flex flex-col gap-2">
@@ -57,8 +57,8 @@ const Placeorder = (props: Props) => {
           </div>
       </div>
       <div className="flex flex-row justify-between mt-2 ">
-      <button className="rounded-sm bg-[#96EFFF] hover:bg-[#5FBDFF] w-2/5" onClick={handleclick}>Submit</button>
-      <button className="rounded-sm bg-[#96EFFF] hover:bg-[#5FBDFF] w-2/5">Preview Artwork</button>
+      <button className="rounded-sm bg-[#C69774] hover:bg-[#5FBDFF] w-2/5" onClick={handleclick}>Submit</button>
+      <button className="rounded-sm bg-[#C69774] hover:bg-[#5FBDFF] w-2/5">Preview Artwork</button>
       </div>
     </div>
   )
