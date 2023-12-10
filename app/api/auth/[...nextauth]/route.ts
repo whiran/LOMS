@@ -7,6 +7,8 @@ import { user } from '@prisma/client';
 import { JWT } from 'next-auth/jwt';
 import { Session, User, Account } from "next-auth";;
 
+//authentication handler 
+
 export const authOptions: AuthOptions = {
      
 
@@ -43,13 +45,20 @@ export const authOptions: AuthOptions = {
             }
             const userPassword = user.password;
 
+            const userType = user.userType;
+
             const isValidPassword = bcrypt.compareSync(password, userPassword);
 
             if(!isValidPassword){
                 return null;
             }
-
-            return user;
+           
+            return {
+                    email: user.email,
+                    id: user.id,
+                    userType: user.userType,
+                    type: user.userType,
+            };
 
             }
           })
@@ -84,27 +93,28 @@ export const authOptions: AuthOptions = {
         maxAge: 30 * 25 * 60 * 60,
         updateAge: 24 * 60 * 60,
       },
-      callbacks: {
-        async session( params: {session:Session; token: JWT; user: User}){
-            if(params.session.user){
-                params.session.user.email = params.token.email;
+      callbacks: 
+      {
+        async jwt(params: any) {
+            if(params.user?.userType) {
+                params.token.userType = params.user.userType;
+                params.token.id = params.user.id; 
+               
             }
-            return params.session;
-        },
-        async jwt(params: {
-            token: JWT;
-            user?: User | undefined;
-            account?: Account | null | undefined;
-            profile?: Profile | undefined;
-            isNewUser?: boolean | undefined;
 
-        }){
-            if(params.user){
-                params.token.email = params.user.email;
-            }
             return params.token;
+        },
+
+        async session({ session, token}) {
+            if(session.user) {   
+                session.user.id = token.id as string
+                (session.user as {userType: string}).userType = token.userType as string;   
+            }
+
+            return session;
         }
-      }
+        
+    }
     }
 
     const handler = NextAuth(authOptions);

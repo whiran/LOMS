@@ -2,12 +2,12 @@
 
 import prisma from "@/lib/prisma"
 import bcrypt from 'bcryptjs'
+import { UserRoles } from "@prisma/client"
 
 
-//sign up code
-//user give the email and password
 
-export const signup = async (firstname:string,lastname: string,pnum: string, sa: string,sl: string,city: string,post: string, country: string,region: string, email:string, password: string) => {
+
+export const companysignup = async (firstname:string,lastname: string,bname: string,pnum: string, sa: string,sl: string,city: string,post: string, country: string,region: string, email:string, password: string) => {
   const user = await prisma.user.findUnique({
     where: {
       email,
@@ -18,10 +18,12 @@ export const signup = async (firstname:string,lastname: string,pnum: string, sa:
   }
 
   const passwordU = bcrypt.hashSync(password, 10);
-  await prisma.normaluser.create({
+
+  await prisma.company.create({
     data: {
       firstname,
       lastname,
+      bname,
       pnum,
       sa,
       sl,
@@ -33,10 +35,12 @@ export const signup = async (firstname:string,lastname: string,pnum: string, sa:
       password: passwordU
     }
   })
+
   await prisma.user.create({
     data: {
       email,
       password: passwordU,
+      role: UserRoles.company,
     },
   });
 

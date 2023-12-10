@@ -49,7 +49,7 @@ useEffect(() => {
 
 
   return (
-    <div className='flex flex-col gap-8 bg-gray-100 p-4 md:w-64 rounded-md'>
+    <div className='flex flex-col gap-2 bg-gray-100 p-4 md:w-64 rounded-md'>
       <input type='text' placeholder='Username' value={email} onChange={(e) => setEmail(e.target.value)} className='p-2 rounded border border-gray-300'/>
       <input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} className='p-2 rounded border border-gray-300'/>
       

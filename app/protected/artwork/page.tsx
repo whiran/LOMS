@@ -8,6 +8,7 @@ type Props = {}
 
 const Page = (props: Props) => {
 
+  //view the art work main page
 
   return (
     

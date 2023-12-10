@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link"
 import Image from "next/image"
-import { LayoutDashboard, Component, FileText, Settings, FileBarChart, FormInput  } from "lucide-react";
+import { LayoutDashboard, Component, FileText, Settings, FileBarChart, FormInput, FolderPlus, Grid2X2, Gauge, Scroll  } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -33,6 +33,30 @@ const routes = [
     icon: FormInput,
     color: "text-rose-600",
     href: '/protected/misreport'
+  },
+  {
+    label: 'Enter Order',
+    icon: FolderPlus,
+    color: 'text-amber-500',
+    href: '/protected/manualdata'
+  },
+  {
+    label: 'Enter Orderqty',
+    icon: Grid2X2,
+    color: "text-yellow-500",
+    href: '/protected/orderqty'
+  },
+  {
+    label: 'Order dashbord',
+    icon: Gauge ,
+    color: "text-yellow-950",
+    href: '/protected/orderdash'
+  },
+  {
+    label: 'pdf content',
+    icon: Scroll,
+    color: "text-zinc-950",
+    href: '/protected/pdfcontent'
   }
 ];
 

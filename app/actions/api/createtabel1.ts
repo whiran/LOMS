@@ -1,6 +1,8 @@
 'use server';
 import prisma from "@/lib/prisma";
 
+//create contract record
+
 export const createtable1 = async (constractno: string, season: string, tdept: string, prodesc: string, strokedesc: string, stroke: string) => {
   const contractok = await prisma.contract.findUnique({
     where: {

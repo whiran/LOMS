@@ -5,6 +5,8 @@ import Provider from '@/components/Provider'
 import Sidebar from '@/components/Sidebar'
 import { MyProvider } from '@/context/MyContext'
 
+//main layout
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className='h-full relative'>
+        <div className='h-full relative w-screen'>
           
           <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900">
             <Sidebar />

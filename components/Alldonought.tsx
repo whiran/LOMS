@@ -47,7 +47,7 @@ function Adoughnut({contract,care,other,quntity}: Props){
   }
 
   return (
-    <div className='h-96 w-full m-2 border rounded-lg  bg-white '>
+    <div className='h-80 w-5/6  border rounded-lg  bg-white mx-auto'>
       <Doughnut
       data ={data} 
       options={options}

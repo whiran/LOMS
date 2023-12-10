@@ -115,7 +115,7 @@ export const newstream = async (fielname: string)=>{
   let count: number = 0;
   let strokecount: number = 0;
 
-  const xmlFilePath = `D:\\next\\1-11-final\\public\\${fielname}`;
+  const xmlFilePath = `./public/${fielname}`;
 
   // Create a new SAX parser
   const parser = sax.createStream(true);
@@ -286,11 +286,6 @@ export const newstream = async (fielname: string)=>{
   parser.on('end',async () => {
     console.log('start');
     console.log(`open count ${count} stroke count ${strokecount}`);
-    let stcount = 0;
-    let lcount = 0;
-    let ccount = 0;
-    let scount = 0;
-    let ucount = 0;
     
     // $env:NODE_OPTIONS="--max_old_space_size=8096"
     const labelnumber = await createlabel(label.date,label.time,label['record-count'],label['run-number']);
@@ -359,14 +354,19 @@ export const newstream = async (fielname: string)=>{
         }
 
       }
-      scount++;
+      
       console.log(`for loop worked`)
     }
     await looptheobject();
-
     console.log('end');
-    console.log(`strokes ${stcount} labels ${lcount} clours ${ccount} sizes ${scount} upcs ${ucount}.`)
-    console.log(label);
+    fs.unlink(xmlFilePath, (err) => {
+      if (err) {
+        console.error('Error deleting file:', err);
+        return;
+      }
+      console.log('File deleted successfully.');
+    });
+
   });
    
   // Read the XML file and pipe it to the parser
