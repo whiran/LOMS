@@ -1,6 +1,7 @@
 
 import { caredata, constractdata, otherdata, quantitydata } from '@/app/actions/api/getalllabeldata';
 import { getorders, getpendingorders, getprocessingorders, getcompletedorders } from '@/app/actions/api/getorders';
+import Mainnavbar from '@/components/Mainnavbar';
 
 import React from 'react'
 
@@ -10,7 +11,11 @@ const page = async ({ params }: { params: { id: string } }) => {
   if(params.id == 'order'){
     const fetcheddata = await getorders();
   return (
-    <div className='bg-slate-100 h-screen'>
+    <div className='bg-slate-100 h-screen flex flex-col'>
+       <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+        <div>
         <h1 className='font-bold text-center'>{params.id} Details:</h1>
         <table className='m-auto bg-white w-[80%]'>
           <thead className='p-2 bg-emerald-400 w-full'>
@@ -30,13 +35,18 @@ const page = async ({ params }: { params: { id: string } }) => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
   )
   }else if(params.id == 'process'){
     const fetcheddata = await getprocessingorders();
     return (
-      <div className='bg-slate-100 h-screen'>
-        <h1 className='font-bold text-center'>{params.id} Details:</h1>
+      <div className='bg-slate-100 h-screen flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+       <div>
+       <h1 className='font-bold text-center'>{params.id} Details:</h1>
         <table className='m-auto bg-white w-[80%]'>
           <thead className='p-2 bg-emerald-400 w-full'>
             <tr>
@@ -55,13 +65,18 @@ const page = async ({ params }: { params: { id: string } }) => {
             ))}
           </tbody>
         </table>
+       </div>
       </div>
     )
   }else if(params.id == 'pending'){
     const fetcheddata = await getpendingorders()
     return(
-      <div className='bg-slate-100 h-screen'>
-        <h1 className='font-bold text-center'>{params.id} Details:</h1>
+      <div className='bg-slate-100 h-screen flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+       <div>
+       <h1 className='font-bold text-center'>{params.id} Details:</h1>
         <table className='m-auto bg-white w-[80%]'>
           <thead className='p-2 bg-emerald-400 w-full'>
             <tr>
@@ -80,13 +95,18 @@ const page = async ({ params }: { params: { id: string } }) => {
             ))}
           </tbody>
         </table>
+       </div>
       </div>
     )
   }else if(params.id == 'complete'){
     const fetcheddata = await getcompletedorders();
     return(
-      <div className='bg-slate-100 h-screen'>
-        <h1  >{params.id} Details:</h1>
+      <div className='bg-slate-100 h-screen flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+       <div>
+       <h1  className='font-bold text-center'>{params.id} Details:</h1>
         <table className='m-auto bg-white w-[80%]'>
           <thead className='p-2 bg-emerald-400 w-full'>
             <tr>
@@ -105,15 +125,20 @@ const page = async ({ params }: { params: { id: string } }) => {
             ))}
           </tbody>
         </table>
+       </div>
       </div>
     )
   }else if(params.id == 'contract'){
     const fetcheddata = await constractdata();
     return(
-      <div className='bg-slate-100 h-screen'>
-        <h1 className='font-bold text-center'>{params.id} Data</h1>
-        <table>
-          <thead>
+      <div className='bg-slate-100 h-screen flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+       <div>
+       <h1 className='font-bold text-center'>{params.id} Data</h1>
+        <table className='m-auto bg-white w-[80%]'>
+          <thead  className='p-2 bg-emerald-400 w-full'>
             <tr>
               <th>constractno</th>
               <th>season</th>
@@ -140,22 +165,138 @@ const page = async ({ params }: { params: { id: string } }) => {
             ))}
           </tbody>
         </table>
+       </div>
       </div>
     )
   }else if(params.id == 'care'){
     const fetcheddata = await caredata();
     return(
-      <div></div>
+      <div className='bg-slate-100 h-screen  flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+        <div>
+        <h1 className='font-bold text-center'>{params.id} Data</h1>
+        <table className='m-auto bg-white w-[80%]'>
+          <thead className='p-2 bg-emerald-400 w-full'>
+            <tr>
+              <th>Id</th>
+              <th>Ref No</th>
+              <th>Wash symbol</th>
+              <th>fiber</th>
+              <th>zoordes</th>
+              <th>mpart</th>
+              <th>coo</th>
+              <th>caretxt</th>
+              <th>Contract No</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              fetcheddata.map(data => (
+                <tr key={data.id}>
+                  <td>{data.id}</td>
+                  <td>{data.ref_no}</td>
+                  <td>{data.wash_symbol}</td>
+                  <td>{data.fibre}</td>
+                  <td>{data.zoordes}</td>
+                  <td>{data.mpart_fw}</td>
+                  <td>{data.coo}</td>
+                  <td>{data.caretext}</td>
+                  <td>{data.contract_id}</td>
+                  <td>{data.createdAt.toISOString()}</td>
+                  <td>{data.updatedAt.toISOString()}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        </div>
+      </div>
     )
   }else if(params.id == 'other'){
     const fetcheddata = await otherdata();
     return(
-      <div></div>
+      <div className='bg-slate-100 h-screen  flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+        <div>
+        <h1 className='font-bold text-center'>{params.id} Data</h1>
+        <table className='m-auto bg-white w-[80%]'>
+          <thead className='p-2 bg-emerald-400 w-full'>
+            <tr>
+              <th>Id</th>
+              <th>Ref No</th>
+              <th>Label Type</th>
+              <th>CareLabel Id</th>
+              <th>CreatedAt</th>
+              <th>UpdatedAt</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fetcheddata.map(data => (
+              <tr key={data.id}>
+                <td>{data.id}</td>
+                <td>{data.fef_no}</td>
+                <td>{data.label_type}</td>
+                <td>{data.carelabel_id}</td>
+                <td>{data.createdAt.toISOString()}</td>
+                <td>{data.updatedAt.toISOString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+      </div>
     )
   }else if(params.id == 'quantity'){
     const fetcheddata = await quantitydata();
     return(
-      <div></div>
+      <div className='bg-slate-100 h-screen  flex flex-col'>
+          <div className="h-[9vh]">
+          <Mainnavbar />
+        </div>
+        <div>
+        <h1 className='font-bold text-center'>{params.id} Data</h1>
+        <table className='m-auto bg-white w-[80%]'>
+          <thead className='p-2 bg-emerald-400 w-full'>
+            <tr>
+              <th>Id</th>
+              <th>Color code</th>
+              <th>Color Name</th>
+              <th>Upc no</th>
+              <th>Primary size</th>
+              <th>Secondary size</th>
+              <th>Selling price</th>
+              <th>Order qty</th>
+              <th>Other label Id</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fetcheddata.map(data => (
+              <tr key={data.id}>
+                <td>{data.id}</td>
+                <td>{data.color_code}</td>
+                <td>{data.color_name}</td>
+                <td>{data.upc_no}</td>
+                <td>{data.primary_size}</td>
+                <td>{data.secondary_size}</td>
+                <td>{data.selling_price}</td>
+                <td>{data.order_qty}</td>
+                <td>{data.otherlabel_id}</td>
+                <td>{data.createdAt.toISOString()}</td>
+                <td>{data.updatedAt.toISOString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+      </div>
     )
   }else{
     return(

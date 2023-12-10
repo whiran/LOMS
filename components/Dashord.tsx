@@ -32,7 +32,7 @@ const Dashord = ({ processCount, pendingCount, completeCount, totalCount }:     
               </div>
             </div>
           </div>
-          <Link href='' className='bg-sky-600 h-2/5'>
+          <Link href='/protected/orderdash/all' className='bg-sky-600 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
@@ -50,7 +50,7 @@ const Dashord = ({ processCount, pendingCount, completeCount, totalCount }:     
               </div>
             </div>
           </div>
-          <Link href='' className='bg-green-500 h-2/5'>
+          <Link href='/protected/orderdash/completed' className='bg-green-500 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
@@ -67,7 +67,7 @@ const Dashord = ({ processCount, pendingCount, completeCount, totalCount }:     
               </div>
             </div>
           </div>
-          <Link href='' className='bg-sky-400 h-2/5'>
+          <Link href='/protected/orderdash/processing' className='bg-sky-400 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>
@@ -85,7 +85,7 @@ const Dashord = ({ processCount, pendingCount, completeCount, totalCount }:     
               </div>
             </div>
           </div>
-          <Link href='' className='bg-rose-400 h-2/5'>
+          <Link href='/protected/orderdash/pending' className='bg-rose-400 h-2/5'>
           <div className='p-2 cursor-pointer flex'>View Details <ChevronRight /></div>
           </Link>
         </div>

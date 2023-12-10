@@ -110,9 +110,9 @@ useEffect(() => {
   
   return (
     <main className=" bg-blue-200 h-full flex flex-col border-none"> 
-          <div className='grid grid-cols-2 grid-rows-3 border-none h-[100%]  overflow-auto min-w-[938px]'>
+          <div className='grid grid-cols-2 grid-rows-3 border-none h-[100%]'>
               <div className='row-span-2 '>
-                <div className=' flex flex-col border-8 border-gray-200 rounded-sm  m-1 h-full'>
+                <div className=' flex flex-col border-8 border-gray-200 rounded-sm  h-full'>
                   <div className='w-full h-12 flex flex-col mt-1 '>
                     <Suspense fallback={<div>Loading...</div>}>
                     <div className='w-full h-6 p-0 text-sm flex flex-row sm:h-6'>
@@ -234,7 +234,7 @@ useEffect(() => {
                 </div>
 
               </div>
-              <div className='row-span-3 flex flex-col border-8 border-gray-200 rounded-sm m-1 h-full overflow-auto'>
+              <div className='row-span-3 flex flex-col border-8 border-gray-200 rounded-sm  h-full overflow-auto'>
                     <div className='w-full bg-sky-700 col text-white h-6 flex justify-between text-sm'>
                     <label className='mx-1'><input type="radio" className='mx-1'/>TWIN</label>
                     <label className='mx-1'><input type="radio" className='mx-1'/>BOOKLET</label>
@@ -258,7 +258,7 @@ useEffect(() => {
                 </div>
                 
               <div>
-                <div className=' flex flex-col border-8 border-gray-200 rounded-sm m-1 h-full'>
+                <div className=' flex flex-col border-8 border-gray-200 rounded-sm h-full'>
                     <div className='w-full h-full flex flex-col'>
                       <div className='bg-sky-700 col text-white sm:h-6'><p className='ml-2'>PDF LAYOUTS GALLERY</p></div>
                       <div className='flex justify-center items-center h-full text-6xl'><p>M&S</p></div>

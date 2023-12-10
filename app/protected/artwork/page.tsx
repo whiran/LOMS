@@ -12,11 +12,13 @@ const Page = (props: Props) => {
 
   return (
     
-    <div className="h-screen relative bg-blue-200">
+    <div className="relative bg-blue-200 w-full min-w-[938px] overscroll-x-none">
        <div className="h-[9vh]">
         <Mainnavbar />
        </div>
-       <Artwork />
+       <div className='h-full w-full'>
+        <Artwork />
+       </div>
     </div>
   )
 }

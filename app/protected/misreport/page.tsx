@@ -1,12 +1,11 @@
 'use server'
 import MISinterface from "@/components/MISinterface"
 import Mainnavbar from "@/components/Mainnavbar"
-import Misreport from "@/components/Misreport"
-import Dashord from '@/components/Dashord'
+
 import { getordercomplete, getorderpending, getorderprocessing, totalcount } from "@/app/actions/api/countorders"
 import { getcarecount, getcontractcount, getothercount, getquntitycount } from "@/app/actions/api/countrecord"
 import { groupbycontractmonth, groupbyothermonth, groupbyquantitymonth } from "@/app/actions/api/getmonth"
-import Care from "@/components/Care"
+
 
 
 type Props = {}
