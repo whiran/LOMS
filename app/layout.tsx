@@ -4,6 +4,7 @@ import './globals.css'
 import Provider from '@/components/Provider'
 import Sidebar from '@/components/Sidebar'
 import { MyProvider } from '@/context/MyContext'
+import { Toaster } from '@/components/ui/toaster'
 
 //main layout
 
@@ -24,18 +25,20 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className='h-full relative w-screen'>
-          
-          <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900">
+        <Provider>
+          <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900 lg:flex lg:w-[20%] lg:flex-col lg:fixed lg_inset-y-0">
             <Sidebar />
           </div>
-          <main className="md:pl-72">
-          <Provider>
+          <main className="md:pl-72 lg:pl-[20%]">
+          
             <MyProvider>
             {children}
             </MyProvider>
-          </Provider>
-          </main>
           
+         
+          </main>
+          <Toaster />
+        </Provider>
         </div>
         </body>
     </html>

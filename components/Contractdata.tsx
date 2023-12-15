@@ -22,23 +22,21 @@ type Props = {
 export default  function Contractdata({ strokeno }: Props) {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const { state1,setState1, inputState1, setState3,setState4,setState2 } = useMyContext();
-  console.log('setcontract is running...')
+  
 
   const handleRowClick = (contractNo: string) => {
-    console.log('Clicked on contract number:', contractNo);
     setState1(contractNo);
     setState2('000000000000000000000000');
     setState3('000000000000000000000000');
     setState4('000000000000000000000000');
   };
-  console.log(state1);
+ 
   
   useEffect(() => {
     const fetchContracts = async () => {
       const fetchedContracts = await getcontract(strokeno);
       const sortedContracts = [...fetchedContracts].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
       setContracts(sortedContracts);
-      console.log('useEffect is running!')
     };
     fetchContracts();
   },[strokeno,inputState1]);

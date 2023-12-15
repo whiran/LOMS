@@ -24,9 +24,9 @@ const Mainnavbar = async () => {
   
   
   return (
-    <div className='w-full max-w-screen-xl  flex justify-between items-center bg-[#ADC4CE] text-white h-[9vh]'>
+    <div className='w-full   flex justify-between items-center bg-[#ADC4CE] text-white h-[9vh]'>
       <Mobilesidebar apiLimitCount={0} isPro={false}/>
-      <div className=' mr-2 text-sm w-full flex justify-end'>
+      <div className=' mr-2 text-sm lg:text-base xl:text-lg w-full flex justify-end'>
         {session && session.user?.email ? (
             <DropdownMenu>
                 <DropdownMenuTrigger  asChild>
@@ -42,7 +42,7 @@ const Mainnavbar = async () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Help</DropdownMenuItem>
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuItem><Link href='/protected/settings'>Settings</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem><Link href='/auth/signout'>Log out</Link></DropdownMenuItem>
                 </DropdownMenuContent>
@@ -51,7 +51,6 @@ const Mainnavbar = async () => {
           <>
           <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signup'>Signup</Link>
           <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signin'>Signin</Link>
-          <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/company'>Company Register</Link>
           </>
         )}
         

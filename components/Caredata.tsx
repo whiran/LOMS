@@ -22,10 +22,7 @@ type Care = {
 export default  function Caredata() {
   const [cares, setCares] = useState<Care[]>([]);
   const { state1,state2,setState2,inputState2, setInputState2,setState3,setState4 } = useMyContext();
-  console.log('setcare2 is running...')
-  console.log(state2);
   const handleRowClick = (id: string) => {
-    console.log('cliced');
     setState2(id);
     setState3('000000000000000000000000');
     setState4('000000000000000000000000');
@@ -38,7 +35,7 @@ export default  function Caredata() {
       const fetchedContracts = await getcare(state1);
       const sortedContracts = [...fetchedContracts].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
       setCares(sortedContracts);
-      console.log('useEffect is running on care!')
+    
     };
     fetchCare();
   },[state1, inputState2]);

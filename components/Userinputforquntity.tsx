@@ -2,6 +2,9 @@
 import React, { useState } from 'react'
 import { useMyContext } from '../context/MyContext';
 import { createquantity } from '@/app/actions/api/createquantity';
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
+
 
 type Props = {}
 
@@ -15,10 +18,12 @@ const Userinputforquntity = (props: Props) => {
   const [sellingprice,setSellingprice] = useState(0);
   const [orderqty,setOrderqty] = useState('');
   const {state3,setInputState4,inputState4} = useMyContext();
+  const { toast } = useToast()
+
 
   const handleenterpress = async (e: React.KeyboardEvent) => {
     if(e.key === "Enter"){
-      if(colorcode && colorname && upcno && primarysize && secondarysize && sellingprice && orderqty && state3 ){
+      if(colorcode && colorname && upcno && primarysize && secondarysize && sellingprice && orderqty && state3 && state3!=='000000000000000000000000' ){
         const result = await createquantity(colorcode,colorname,upcno,primarysize,secondarysize,sellingprice,orderqty,state3);
 
         if(result === "Successfully created new strokeno"){
@@ -31,10 +36,27 @@ const Userinputforquntity = (props: Props) => {
           setOrderqty('');
           setInputState4(!inputState4);
         }else{
-          alert(result);
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Something went wrong from the serverside!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
         }
+      }else if(state3 == '' || state3 =='000000000000000000000000'){
+        
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "please select other ref no before enter data!",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
       }else{
-        alert("please fill in all fields.");
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "Please fill all the fields.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
       }
     }
   }

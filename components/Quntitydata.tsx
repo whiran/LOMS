@@ -20,20 +20,18 @@ type Quntity = {
 export default  function Quntitydata() {
   const [quntitys, setQuntitys] = useState<Quntity[]>([]);
   const { state3,state4,setState4, inputState4, setInputState4} = useMyContext();
-  console.log('setquntity is running...')
+
 
   const handleRowClick = (id: string) => {
-    console.log('Clicked on quntity number:', id);
     setState4(id);
   };
-  console.log(state4);
+
   
   useEffect(() => {
     const fetchQuntity = async () => {
       const fetchQuntity = await getquntity(state3);
       const sortedQuntity = [...fetchQuntity].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
       setQuntitys(sortedQuntity);
-      console.log('useEffect is running on Quntity!')
     };
     if(state3 !== ''){
       fetchQuntity();

@@ -18,25 +18,26 @@ export const signup = async (firstname:string,lastname: string,pnum: string, sa:
   }
 
   const passwordU = bcrypt.hashSync(password, 10);
-  await prisma.normaluser.create({
-    data: {
-      firstname,
-      lastname,
-      pnum,
-      sa,
-      sl,
-      city,
-      post,
-      country,
-      region,
-      email,
-      password: passwordU
-    }
-  })
+  
   await prisma.user.create({
     data: {
       email,
       password: passwordU,
+      normaluser: {
+        create: {
+          firstname,
+          lastname,
+          pnum,
+          sa,
+          sl,
+          city,
+          post,
+          country,
+          region,
+          email,
+          password: passwordU
+        }
+      }
     },
   });
 

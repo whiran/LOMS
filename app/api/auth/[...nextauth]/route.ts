@@ -53,12 +53,7 @@ export const authOptions: AuthOptions = {
                 return null;
             }
            
-            return {
-                    email: user.email,
-                    id: user.id,
-                    userType: user.userType,
-                    type: user.userType,
-            };
+            return user;
 
             }
           })
@@ -68,49 +63,29 @@ export const authOptions: AuthOptions = {
         signIn: '/auth/signin',
         signOut: '/auth/signout',
       },
-      secret: process.env.NEXTAUTH_SECRET,
-      jwt: {
-        async encode({secret, token}){
-            if(!token){
-                throw new Error('NO TOKEN to encode');
-            }
-            return jwt.sign(token, secret);
-        },
-        async decode({secret, token}){
-            if(!token){
-                throw new Error('NO TOKEN to decode');
-            }
-            const decodedToken = jwt.verify(token,secret);
-            if(typeof decodedToken === 'string'){
-                return JSON.parse(decodedToken);
-            }else {
-                return decodedToken;
-            }
-        }
-      },
       session: {
         strategy: 'jwt',
         maxAge: 30 * 25 * 60 * 60,
         updateAge: 24 * 60 * 60,
       },
+      
       callbacks: 
+      
       {
-        async jwt(params: any) {
-            if(params.user?.userType) {
-                params.token.userType = params.user.userType;
-                params.token.id = params.user.id; 
-               
-            }
 
-            return params.token;
+        async jwt({token ,user}) {
+            if(user) {
+                token.userType = user.userType;
+                token.id = user.id; 
+            }
+            return token;
         },
 
         async session({ session, token}) {
-            if(session.user) {   
+            if(session?.user) {   
                 session.user.id = token.id as string
-                (session.user as {userType: string}).userType = token.userType as string;   
+                session.user.userType = token.userType as string;   
             }
-
             return session;
         }
         

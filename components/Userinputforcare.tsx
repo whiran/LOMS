@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import { useMyContext } from '../context/MyContext';
 import { createcare } from '@/app/actions/api/createcare';
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
 
 type Props = {}
 
@@ -15,11 +17,13 @@ const Userinputforcare = (props: Props) => {
   const [caretext, setCaretext] = useState("");
   const [contract_id, setContract_id] = useState('');
   const { state1, inputState2, setInputState2} = useMyContext();
+  const { toast } = useToast()
+ 
 
 
   const handleenterpress = async (e: React.KeyboardEvent) => {
     if(e.key === "Enter"){
-      if(refno && washsymbol && fibre && zoordes && mpart && coo && caretext && state1){
+      if(refno && washsymbol && fibre && zoordes && mpart && coo && caretext && state1 && state1!=='000000000000000000000000'){
         const result = await createcare(refno,washsymbol,fibre,zoordes,mpart, coo,caretext,state1);
 
         if(result === "Successfully created new strokeno"){
@@ -32,10 +36,28 @@ const Userinputforcare = (props: Props) => {
           setCaretext('');
           setInputState2(!inputState2);
         }else{
-          alert(result);
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Something went wrong from the serverside!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
         }
-      }else{
-        alert("please fill in all fields.");
+      }else if(state1 == ''){
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please select contract number or create one and then select!",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+       
+      }
+      else{
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "Please fill all the fields.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
       }
     }
   }

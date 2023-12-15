@@ -4,6 +4,9 @@ import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import Sidebar from './Sidebar';
 import { useEffect, useState } from 'react';
+import { useSession } from "next-auth/react"
+import { useMyContext } from '@/context/MyContext';
+
 const Mobilesidebar = (
   {
     apiLimitCount = 0,
@@ -14,7 +17,11 @@ const Mobilesidebar = (
   }
 ) => {
   const [isMounted, setIsMounted] = useState(false);
-
+  const {state6, setState6} = useMyContext();
+  const { data: session, status } = useSession();
+  setState6(session?.user.id as string);
+  console.log(state6);
+  
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -22,6 +29,8 @@ const Mobilesidebar = (
   if (!isMounted) {
     return null;
   }
+
+  
   
   return (
     <Sheet>

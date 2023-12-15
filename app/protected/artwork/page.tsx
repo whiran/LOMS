@@ -1,23 +1,34 @@
 
 import Artwork from '@/components/artwork'
 import Mainnavbar from '@/components/Mainnavbar'
-
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+import { getstrokedata } from '@/app/actions/api/getstrokedata';
 
 
 type Props = {}
 
-const Page = (props: Props) => {
+type stroke = {
+    strokeno: string;
+    createdAt: Date;
+    updatedAt: Date;
+    userid: string | null;
+}
 
+const Page = async (props: Props) => {
+  const session = await getServerSession(authOptions);
+  const userid:string = session?.user.id as string
+  const strokedata:stroke[] = await getstrokedata(userid);
   //view the art work main page
 
   return (
     
-    <div className="relative bg-blue-200 w-full min-w-[938px] overscroll-x-none">
+    <div className="h-screen flex flex-col">
        <div className="h-[9vh]">
         <Mainnavbar />
        </div>
        <div className='h-full w-full'>
-        <Artwork />
+        <Artwork userid={userid} strokedata={strokedata}/>
        </div>
     </div>
   )

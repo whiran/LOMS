@@ -5,13 +5,15 @@ import prisma from "@/lib/prisma";
 //get the artwork numbers
 
 
-export const getart = async(contractno: string) => {
-  const arts = await prisma.art.findMany({
+export const getart = async( stroke: string,contractno: string) => {
+  const arts = await prisma.order.findMany({
     where:{
-      contract_id: contractno,
+      strokenum: stroke,
+      contractnum: contractno,
     }
   });
   
-
-  return arts;
+  const artNumbers = arts.map(art => art.id); 
+  return artNumbers;
 }
+

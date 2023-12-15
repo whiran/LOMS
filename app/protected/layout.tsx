@@ -4,6 +4,8 @@
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Mainnavbar from "@/components/Mainnavbar";
 
+
+
 //protected view layout
 
  const DashbordLayout = async({
@@ -14,6 +16,8 @@ import Mainnavbar from "@/components/Mainnavbar";
 
   //check the session
   const session = await getServerSession(authOptions);
+  
+  
   if(!session || !session.user?.email){
     //if it is not show this content
     return(

@@ -37,7 +37,7 @@ const Navbar = (props: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Help</DropdownMenuItem>
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem><Link href='/protected/settings'>Settings</Link></DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem><Link href='/auth/signout'>Log out</Link></DropdownMenuItem>
       </DropdownMenuContent>

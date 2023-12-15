@@ -1,23 +1,27 @@
 'use server'
 import prisma from "@/lib/prisma";
-import { dash } from "pdfkit";
-import { useId } from "react";
-import { useSession } from "next-auth/react"
+
 
 //place order 
 
-export const placeorder = async function placeorder(coo: string, fiber: string, component: string, caretext: string, washsimbol: string, sizeration: string, userid: string) {
+export const placeorder = async function placeorder(strokenum: string, contractnum:string,coo: string, fiber: string, component: string, caretext: string, washsimbol: string, sizeration: string, userid: string, qty?: number, states?: string) {
 
-  if(coo && fiber && component && caretext && washsimbol && sizeration && userid) {
+  
+
+  if(strokenum && contractnum && coo && fiber && component && caretext && washsimbol && sizeration && userid && states) {
     await prisma.order.create({
       data: {
+        strokenum,
+        contractnum,
         coo,
         fiber,
         component,
         caretext,
         washsimbol,
         sizeration,
-        userid
+        userid,
+        qty,
+        orderstatefromuser: states,
       }
     }
     )

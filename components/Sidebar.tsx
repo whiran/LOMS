@@ -1,15 +1,17 @@
 'use client'
 import Link from "next/link"
 import Image from "next/image"
-import { LayoutDashboard, Component, FileText, Settings, FileBarChart, FormInput, FolderPlus, Grid2X2, Gauge, Scroll  } from "lucide-react";
+import { LayoutDashboard, Component, FileText, Settings, FileBarChart, FormInput, FolderPlus, Grid2X2, Gauge, Scroll, UserPlus  } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { useEffect, useState } from "react";
 import { Session } from "next-auth";
+import { Colors } from "chart.js";
+import { useSession } from "next-auth/react"
 
 
-const routes = [
+const routesone = [
   {
     label: 'Dashboard',
     icon: LayoutDashboard,
@@ -57,12 +59,107 @@ const routes = [
     icon: Scroll,
     color: "text-zinc-950",
     href: '/protected/pdfcontent'
+  },
+  {
+    label: 'create user account',
+    icon: UserPlus,
+    color: "text-yellow-300",
+    href: '/protected/createuser'
   }
 ];
 
+const routestwo =[
+  {
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+    href: '/users/dashbord',
+    color: "text-sky-500"
+  },
+  {
+    label: 'ArtWorks',
+    icon: Component,
+    href: '/users/artworks',
+    color: "text-violet-500",
+  },
+  {
+    label: 'MIS report',
+    icon: FormInput,
+    color: "text-rose-600",
+    href: '/users/misreport'
+  },
+  {
+    label: 'Enter Order',
+    icon: FolderPlus,
+    color: 'text-amber-500',
+    href: '/users/placeorders'
+  },
+  {
+    label: 'Order dashbord',
+    icon: Gauge ,
+    color: "text-yellow-950",
+    href: '/protected/orderdash'
+  },
+  {
+    label: 'create user account',
+    icon: UserPlus,
+    color: "text-yellow-300",
+    href: '/users/createuseraccount'
+  }
+];
+
+const routetree = [
+  {
+    label: 'Dashboard',
+    icon: LayoutDashboard,
+    href: '/subuser/dashbord',
+    color: "text-sky-500"
+  },
+  {
+    label: 'ArtWorks',
+    icon: Component,
+    href: '/subuser/artwork',
+    color: "text-violet-500",
+  },
+  {
+    label: 'MIS report',
+    icon: FormInput,
+    color: "text-rose-600",
+    href: '/subuser/misreport'
+  },
+  {
+    label: 'Enter Order',
+    icon: FolderPlus,
+    color: 'text-amber-500',
+    href: '/subuser/manualdata'
+  },
+  {
+    label: 'Order dashbord',
+    icon: Gauge ,
+    color: "text-yellow-950",
+    href: '/subuser/orderdash'
+  }
+]
+
 const Sidebar = () => {
 
+  const { data: session, status } = useSession();
+  console.log(session?.user.userType as string);
+  const getroutes = () =>{
+    if(session?.user.userType == 'admin'){
+      return routesone;
+   }else if(session?.user.userType == 'user'){
+    return routestwo;
+   }else if(session?.user.userType == 'subuser'){
+    return routetree;
+   }else{
+    return []
+   }
+  }
+  
+  const routes = getroutes();
 
+  
+  
   
   return (
     <div className="space-y-4 py-4 flex flex-col h-full bg-[#96B6C5] text-white">

@@ -18,6 +18,7 @@ type order = {
 
 type Props = {
   orders: order[];
+
 }
 
 const Orderlits = (props: Props) => {
