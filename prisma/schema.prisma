@@ -37,6 +37,7 @@ model user {
   updatedAt  DateTime    @updatedAt
   createdby  String?     @db.ObjectId //this is only when customers and subusers
   strokes    stroke[]
+  subusers   subuser[]
 }
 
 model normaluser {
@@ -75,16 +76,18 @@ model customer {
 }
 
 model subuser {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  customer  customer  @relation(fields: [createdby], references: [id])
-  createdby String    @db.ObjectId
-  email     String    @unique
-  userType  UserRoles @default(subuser)
-  ownid     String    @unique @db.ObjectId
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  orders    order[]
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  customer        customer  @relation(fields: [createdby], references: [id])
+  createdby       String    @db.ObjectId
+  user            user      @relation(fields: [createdbyuserid], references: [id])
+  createdbyuserid String    @db.ObjectId
+  email           String    @unique
+  userType        UserRoles @default(subuser)
+  ownid           String    @unique @db.ObjectId
+  password        String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          order[]
 }
 
 //orders

@@ -54,7 +54,6 @@ const Artwork = (props: Props) => {
 
  //fetch the stroke data
  useEffect(() => {
-     console.log('start')
      setStrokes(props.strokedata);
      setStrokeno(props.strokedata[0].strokeno);
      setContracts(props.strokedata[0].contractNumbers);
@@ -69,13 +68,13 @@ useEffect(() => {
 }, [strokeno, contactno]);
 
 const fetchArt = async () => {
-  console.log('fetch art is runnig',strokeno,contracts.toString())
   const fetchedarts = await getart(strokeno, contactno);
-  console.log(fetchedarts.toString(),'this is the reult');
+  setArtno(fetchedarts[0] || '');
   setArtnoms(fetchedarts || []);
-  if (fetchedarts && fetchedarts.length > 0) {
-    setArtno(fetchedarts[0] || '');
-  }
+ 
+    
+    console.log('artno:',artno.toString());
+  
 };
 
 const handleclick = (e:  React.ChangeEvent<HTMLSelectElement>) => {
@@ -88,8 +87,8 @@ const handleclick = (e:  React.ChangeEvent<HTMLSelectElement>) => {
   
   return (
    <div  className=" bg-blue-200 h-full grid grid-cols-2 grid-rows-3 border-non w-full">
-      <div className='w-full row-span-2'>
-              <div className=' flex flex-col border-8 border-gray-200 rounded-sm  h-full w-full '>
+      <div className='w-full row-span-2 '>
+              <div className=' flex flex-col border-8 border-gray-200 rounded-sm  h-full w-full overflow-auto'>
                  <div className='w-full h-12 lg:h-24 flex flex-col mt-1  justify-center items-center'>
                     <div className='w-full h-6 p-0 text-sm flex flex-row sm:h-6'>
                       <div className='flex flex-row w-1/2'><label className='mx-2'>STROKE NO</label>
@@ -120,7 +119,7 @@ const handleclick = (e:  React.ChangeEvent<HTMLSelectElement>) => {
                     </div>
                   </div>
                   <div className='w-full h-full flex flex-col'>
-                    <div className='bg-sky-700 col text-white sm:h-6'><p className='ml-2'>FLM DATA</p></div>
+                    <div className='bg-sky-700 col text-white sm:h-6 w-full'><p className='ml-2'>FLM DATA</p></div>
                     
                   </div>
                   

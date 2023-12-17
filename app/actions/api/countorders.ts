@@ -17,6 +17,11 @@ export const totalcount =async (id: string) => {
           select: {
             id: true,
           }
+        },
+        subusers: {
+          select: {
+            id: true,
+          }
         }
       }
     })
@@ -33,7 +38,11 @@ export const totalcount =async (id: string) => {
     });
 
    
- 
+    let totalsubusercount = 0;
+
+    cuscount.forEach((user) => {
+      totalsubusercount += user.subusers.length;
+    })
 
     let totalOrderCount = 0;
 
@@ -49,7 +58,7 @@ export const totalcount =async (id: string) => {
         userid: id,
       }
     })
-    
+    console.log('subuser order count',totalsubusercount)
     const total = totalOrderCount + ordercountoftheuser;
      return total;
    

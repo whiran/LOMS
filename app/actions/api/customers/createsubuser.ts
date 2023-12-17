@@ -14,6 +14,14 @@ export const createsubuser = async (email: string, password: string, id: string)
       return 'no';
     }
     const passwordU = bcrypt.hashSync(password, 10);
+
+    //get the customer id for cretae the connection between customer and subcustomer
+
+    const cusno = await prisma.user.findUnique({
+      where: {
+        id,
+      }
+    })
    
     const user = await prisma.user.create({
       data: {
@@ -21,6 +29,7 @@ export const createsubuser = async (email: string, password: string, id: string)
         password: passwordU,
         createdby: id,
         userType: 'subuser'
+
       }
     })
     const result = await prisma.subuser.create({
@@ -29,6 +38,7 @@ export const createsubuser = async (email: string, password: string, id: string)
         password: passwordU,
         createdby: id,
         ownid: user.id,
+        createdbyuserid: cusno?.id as string,
       }
     })
     
