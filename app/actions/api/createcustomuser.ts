@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma"
 import { UserRoles } from "@prisma/client";
 import bcrypt from 'bcryptjs'
 
+type CustomUserResult = 'ok' | 'no'; 
+
 export const createcustomuser = async (email: string, password: string, id: string) => {
   try{
   const custormer = await prisma.user.findUnique({

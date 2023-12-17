@@ -26,10 +26,10 @@ const page = async (props: Props) => {
  const userresults:Counts = await countstrokes(userid)
  
 
-  const processCountData = await getorderprocessing();
-  const pendingCountData = await getorderpending();
-  const completeCountData = await getordercomplete();
-  const totalCountData = await totalcount();
+  const processCountData = await getorderprocessing(userid);
+  const pendingCountData = await getorderpending(userid);
+  const completeCountData = await getordercomplete(userid);
+  const totalCountData = await totalcount(userid) as number;
   
   const contractCount = userresults.contractCount
   const careCount = userresults.carelabelCount

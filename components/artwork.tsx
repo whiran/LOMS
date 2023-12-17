@@ -11,20 +11,13 @@ import Navbar from '@/components/Navbar'
 
 type Props = {
   userid:string;
-  strokedata:stroke[]
+  strokedata: stroke[]
 }
+
 
 type stroke = {
   strokeno: string;
-  createdAt: Date;
-  updatedAt: Date;
-  userid: string | null;
-}
-
-type Stroke = {
-  strokeno: string;
-  createdAt: Date;
-  updatedAt: Date;
+  contractNumbers: string[];
 }
 type Contract = {
   constractno: string;
@@ -43,13 +36,11 @@ type Art = {
 }
 
 
-
 const Artwork = (props: Props) => {
 
-  const [strokes, setStrokes] = useState<Stroke[]>([]);
-  const [contracts, setContracts] = useState<Contract[]>([]);
+  const [strokes, setStrokes] = useState<stroke[]>([]);
+  const [contracts, setContracts] = useState<string[]>([]);
   const [ artnoms ,setArtnoms] = useState<string[]>([]);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [strokeno, setStrokeno] = useState('');
   const [contactno, setContractno] = useState('');
   const [show, setShow] = useState(false);
@@ -62,48 +53,38 @@ const Artwork = (props: Props) => {
  }
 
  //fetch the stroke data
-
  useEffect(() => {
-  const fetchStroke = async () => {
-    const fetchedStrokes = props.strokedata;
-    const sortedStroke = [...fetchedStrokes].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-    if (sortedStroke.length > 0) {
-      setStrokeno(sortedStroke[0].strokeno);
-    }
-    setStrokes(sortedStroke);
-  };
-  fetchStroke();
-
-},[]);
-//get the contract data
-useEffect(() => {
-  const fetchContract = async () => {
-    const fetchedContracts = await getcontract(strokeno);
-    const sortedContracts = [...fetchedContracts].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-    if(sortedContracts.length > 0){
-      setContractno(sortedContracts[0].constractno);
-    }
-    setContracts(sortedContracts);
-  };
-
-  if (strokeno) {
-    fetchContract();
-  }
-},[strokeno]);
+     console.log('start')
+     setStrokes(props.strokedata);
+     setStrokeno(props.strokedata[0].strokeno);
+     setContracts(props.strokedata[0].contractNumbers);
+     setContractno(props.strokedata[0].contractNumbers[0]);
+  
+}, []); // Added props.strokedata to the dependency array
 
 useEffect(() => {
-  const fetchArt =async () => {
-    const fetchedarts = await getart(strokeno,contactno);
-    setArtnoms(fetchedarts);
-    if (fetchedarts && fetchedarts.length > 0){
-      setArtno(fetchedarts[0])
-    }
-    
-  };
-  if(contactno){
-    fetchArt();
+  if (strokes.length > 0 && contracts.length > 0) {
+    fetchArt(); // Fetch artwork when strokes and contracts are available
   }
-},[contactno, strokeno]);
+}, [strokeno, contactno]);
+
+const fetchArt = async () => {
+  console.log('fetch art is runnig',strokeno,contracts.toString())
+  const fetchedarts = await getart(strokeno, contactno);
+  console.log(fetchedarts.toString(),'this is the reult');
+  setArtnoms(fetchedarts || []);
+  if (fetchedarts && fetchedarts.length > 0) {
+    setArtno(fetchedarts[0] || '');
+  }
+};
+
+const handleclick = (e:  React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedStroke = strokes.find((stroke) => stroke.strokeno === e.target.value);
+  setStrokeno(e.target.value);
+  if(selectedStroke){
+    setContracts(selectedStroke?.contractNumbers);
+  }
+}
   
   return (
    <div  className=" bg-blue-200 h-full grid grid-cols-2 grid-rows-3 border-non w-full">
@@ -112,17 +93,19 @@ useEffect(() => {
                  <div className='w-full h-12 lg:h-24 flex flex-col mt-1  justify-center items-center'>
                     <div className='w-full h-6 p-0 text-sm flex flex-row sm:h-6'>
                       <div className='flex flex-row w-1/2'><label className='mx-2'>STROKE NO</label>
-                      <select className=' mx-2 sm:w-full xl:w-8/12' onChange={(e) => setStrokeno(e.target.value)}>
+                      <select className=' mx-2 sm:w-full xl:w-8/12' onChange={e => handleclick(e)}>
                         {strokes.map( stroke => (
                           <option key={stroke.strokeno} value={stroke.strokeno}>{stroke.strokeno}</option>
                         ))}
                       </select>
                       </div>
                       <div className='flex flex-row w-1/2'><label>CONT.NO</label>
-                      <select className=' ml-2 sm:w-full xl:w-8/12' onChange={(e) => setContractno(e.target.value
-                        )} >
+                      <select className=' ml-2 sm:w-full xl:w-8/12'onChange={(e) => {
+                                  setContractno(e.target.value);
+                                  fetchArt();
+                      }} >
                         {contracts.map(contract =>(
-                          <option key={contract.constractno} value={contract.constractno}>{contract.constractno}</option>
+                          <option key={contract} value={contract}>{contract}</option>
                         ))}
                       </select>
                       </div>

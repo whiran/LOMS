@@ -10,15 +10,17 @@ type Props = {}
 
 type stroke = {
     strokeno: string;
-    createdAt: Date;
-    updatedAt: Date;
-    userid: string | null;
+}
+
+type all = {
+  strokeno: string;
+  contractNumbers: string[];
 }
 
 const Page = async (props: Props) => {
   const session = await getServerSession(authOptions);
   const userid:string = session?.user.id as string
-  const strokedata:stroke[] = await getstrokedata(userid);
+  const strokedata:all[] = await getstrokedata(userid);
   //view the art work main page
 
   return (

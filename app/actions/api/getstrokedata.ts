@@ -9,7 +9,36 @@ export const getstrokedata =async (id:string) => {
     where: {
       userid: id,
     },
+     select: {
+      strokeno: true,
+     }
   })
-  return stroke;
+  const strokes = await prisma.stroke.findMany({
+    where: {
+      userid: id,
+    },
+    select: {
+      strokeno: true,
+      contracts: {
+        select: {
+          constractno: true,
+        },
+      },
+    },
+  });
+
+  const strokeAndContracts: { strokeno: string; contractNumbers: string[] }[] = [];
+
+  strokes.forEach((stroke) => {
+    const contracts = stroke.contracts.map((contract) => contract.constractno);
+    strokeAndContracts.push({
+      strokeno: stroke.strokeno,
+      contractNumbers: contracts,
+    });
+  });
+
+   
+
+  return strokeAndContracts;
 }
 
