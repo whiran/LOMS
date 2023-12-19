@@ -16,7 +16,7 @@ const Care = (props: Props) => {
           <th className=' border z-10 bg-white border-black  w-40'>Zoodes</th>
           <th className=' border z-10 bg-white border-black  w-40'>COO</th>
           <th className=' border z-10 bg-white border-black  w-40'>Caretext</th>
-          <th className=' border z-10 bg-white border-black  w-40'>MPART/FW</th>
+          <th className=' border z-10 bg-white border-black  w-20'>MPART/FW</th>
         </tr>
       </thead>
       <tbody>

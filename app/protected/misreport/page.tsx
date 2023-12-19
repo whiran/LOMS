@@ -23,7 +23,7 @@ type Counts = {
 const page = async (props: Props) => {
   const session = await getServerSession(authOptions);
   const userid:string = session?.user.id as string
- const userresults:Counts = await countstrokes(userid)
+  const userresults:Counts = await countstrokes(userid)
  
 
   const processCountData = await getorderprocessing(userid);

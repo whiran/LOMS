@@ -21,7 +21,7 @@ export const orderqty =async (orderId: string, quantity: number) => {
         id: orderId,
       },
       data : {
-        ordervalue: quantity
+        qty: quantity
       },
     })
     return updateorder;

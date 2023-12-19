@@ -16,10 +16,12 @@ type order = {
   createdAt: Date;
   updatedAt: Date;
   ordervalue?: number | null;
+  qty?: number | null;
 }
 
 type Props = {
   orders: order[];
+  val: { [key: string]: number };
 }
 
 const Orderqty = (props: Props) => {
@@ -30,34 +32,29 @@ const Orderqty = (props: Props) => {
   useEffect(() =>{
     const fetchdata = async () => {
       setOrders(props.orders);
-      const updatedQuantities: { [key: string]: number } = {};
-      props.orders.forEach((order) => {
-        if (order.ordervalue !== null && order.ordervalue !== undefined) {
-          updatedQuantities[order.id] = order.ordervalue;
-        }
-      });
-      setQuantities(() => ({
-        ...updatedQuantities
-      }));
+      setQuantities(props.val);
     };
-    console.log('in useeffect')
    fetchdata();
-  },[props.orders])
+  },[props])
+
   
-  console.log(orders,quantities)
-  console.log('refreshed')
+  
   const handleQuantityChange = (orderId: string, quantity: number) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [orderId]: quantity,
+     
     }));
+    console.log(quantities[orderId])
   };
 
   const handleSubmit = async(orderId: string) => {
     // Access the quantity for the specific order ID and perform your desired action
     const quantity = quantities[orderId];
     // Here, you can save the quantity to a variable or perform other operations
-    await orderqty(orderId,quantity);
+    await handleQuantityChange(orderId, quantities[orderId]);
+    const result = await orderqty(orderId,quantity);
+    console.log(result)
     setBoolval(!boolval);
   };
   return (
@@ -90,7 +87,7 @@ const Orderqty = (props: Props) => {
               <td>{order.state}</td>
               <td className='w-24'>
                 {
-                (order.ordervalue  !== null)? (<input type='number' required placeholder='Quantity'  onChange={(e) => handleQuantityChange(order.id, parseInt(e.target.value))} value={quantities[order.id] }/>):(<input type='number' required placeholder='Quantity'  onChange={(e) => handleQuantityChange(order.id, parseInt(e.target.value))}/>)
+                (order.qty  !== null)? (<input type='number' required placeholder='Quantity'  onChange={(e) => handleQuantityChange(order.id, parseInt(e.target.value))} value={quantities[order.id] }/>):(<input type='number' required placeholder='Quantity'  onChange={(e) => handleQuantityChange(order.id, parseInt(e.target.value))}/>)
                 }
                 </td>
               <td className='w-16'><button className='bg-sky-500 p-2 border rounded-sm' onClick={() => handleSubmit(order.id)}>submit</button></td>

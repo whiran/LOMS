@@ -26,20 +26,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className='h-full relative w-screen'>
         <Provider>
-          <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900 lg:flex lg:w-[20%] lg:flex-col lg:fixed lg_inset-y-0">
-            <Sidebar />
-          </div>
-          <main className="md:pl-72 lg:pl-[20%]">
-          
-            <MyProvider>
-            {children}
-            </MyProvider>
-          
-         
-          </main>
-          <Toaster />
-        </Provider>
+        <MyProvider>
+         {children}
+         </MyProvider>
+         </Provider>
         </div>
+        <Toaster />
         </body>
     </html>
   )

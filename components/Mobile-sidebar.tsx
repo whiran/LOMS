@@ -20,7 +20,7 @@ const Mobilesidebar = (
   const {state6, setState6} = useMyContext();
   const { data: session, status } = useSession();
   setState6(session?.user.id as string);
-  console.log(state6);
+
   
   useEffect(() => {
     setIsMounted(true);

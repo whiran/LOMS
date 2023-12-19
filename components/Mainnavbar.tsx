@@ -24,7 +24,7 @@ const Mainnavbar = async () => {
   
   
   return (
-    <div className='w-full   flex justify-between items-center bg-[#ADC4CE] text-white h-[9vh]'>
+    <div className='w-full   flex justify-between items-center bg-[#ADC4CE] text-white p-2'>
       <Mobilesidebar apiLimitCount={0} isPro={false}/>
       <div className=' mr-2 text-sm lg:text-base xl:text-lg w-full flex justify-end'>
         {session && session.user?.email ? (

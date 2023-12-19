@@ -6,6 +6,9 @@ import { Save } from 'lucide-react'
 import { searchstroke } from '@/app/actions/api/searchstroke';
 import { error } from 'console';
 import { useSession } from "next-auth/react"
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
+
 
 type Props = {}
 
@@ -14,7 +17,7 @@ const Navbarsearch = (props: Props) => {
   const [strokeno, setStrokeno] = useState('');
   const { data: session, status } = useSession();
   setState6(session?.user.id as string);
-
+  const { toast } = useToast()
   const handleInputChange = async () => {
 
     try{
@@ -37,7 +40,12 @@ const Navbarsearch = (props: Props) => {
       if(result === "strokefound"){
         setState5(strokeno);
       }else{
-        alert('stroke number not found');
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Strong not found.",
+          description: "you can click save button to save it if you need!",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
       }
     }
   }catch(error){
@@ -57,7 +65,7 @@ const Navbarsearch = (props: Props) => {
                                     setState4('');}} className=' text-black w-32 mx-2 hover:opacity-95'/>
             <Save color='currentColor' size={18} onClick={handleInputChange}/>
             <button className='border hover:bg-[#879cfb] rounded mx-1' onClick={handleSearch} >SEARCH</button>
-      </div>
+        </div>
     </div>
   
   )

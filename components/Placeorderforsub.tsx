@@ -3,6 +3,7 @@
 import { getcontract } from "@/app/actions/api/getcontract";
 import { getcontractnumbers } from "@/app/actions/api/getcontractnumbers";
 import { placeorder } from "@/app/actions/api/placeorder";
+import { placeordersub } from "@/app/actions/api/subuser/placeorderssub";
 import { useEffect, useState } from "react";
 
 
@@ -11,7 +12,7 @@ type Props = {
   strokes: string[];
 }
 
-const Placeorder = (props: Props) => {
+const Placeorderforsub = (props: Props) => {
   const [strokeno, setStrokeno] = useState('');
   const [contracts, setContracts] = useState<string[]>([]);
   const [conno, setConno] = useState('');
@@ -44,7 +45,7 @@ useEffect(() => {
 
   
   const handleclick = async() => {
-    const result = await placeorder(strokeno,conno,coo,fiber,component,caretext,washsimbol,sizeration,props.id,qty,state);
+    const result = await placeordersub(strokeno,conno,coo,fiber,component,caretext,washsimbol,sizeration,props.id,qty,state);
    
     if(result == 'ok'){
       alert('successfully aded the record');
@@ -110,4 +111,4 @@ useEffect(() => {
   )
 }
 
-export default Placeorder
+export default Placeorderforsub

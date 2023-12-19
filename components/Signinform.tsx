@@ -8,15 +8,17 @@ import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 
 
+
 const Signinform = () => {
   const router = useRouter();
 
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [message, setMessage] = useState('');
+
   const { toast } = useToast()
 
   const handleSubmit = async () => {
@@ -57,9 +59,16 @@ const Signinform = () => {
 useEffect(() => {
   if (status === 'authenticated') {
       router.refresh();
-      router.push('/protected/dashbord');
+      if (session.user.userType === 'admin') {
+        console.log('Admin logged in');
+        router.push('/protected/dashbord'); // Route for admin dashboard
+      } else if(session.user.userType === 'user') {
+        router.push('/users/dashbord'); // Route for other user types
+      } else if(session.user.userType === 'subuser'){
+        router.push('/subuser/dashbord');
+      }
   }
-}, [router, status]);
+}, [router, status, session]);
 
 
 

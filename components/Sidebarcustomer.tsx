@@ -144,7 +144,7 @@ const routetree = [
 
 
 
-const Sidebar = () => {
+const Sidebarcustomer = () => {
 
   // const { data: session, status } = useSession();
   // const getroutes = () =>{
@@ -159,7 +159,7 @@ const Sidebar = () => {
   //  }
   // }
   
-  const routes = routesone
+  const routes = routestwo
 
   
   
@@ -199,4 +199,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default Sidebarcustomer

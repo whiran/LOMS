@@ -68,12 +68,11 @@ useEffect(() => {
 }, [strokeno, contactno]);
 
 const fetchArt = async () => {
+  //stroke and contract no are uniques to printer
   const fetchedarts = await getart(strokeno, contactno);
   setArtno(fetchedarts[0] || '');
   setArtnoms(fetchedarts || []);
  
-    
-    console.log('artno:',artno.toString());
   
 };
 

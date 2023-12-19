@@ -30,11 +30,14 @@ export const getcreatedcustomersstroke = async (id: string) => {
     const strokes = await prisma.stroke.findMany({
       where: {
         userid: printer?.createdby
+      },
+      select: {
+        strokeno: true,
       }
     })
 
-    console.log(strokes.toString());
-    return strokes;
+    const stokeno = strokes.map((s) => s.strokeno);
+    return stokeno;
 
   }catch(error){
     console.log('got an error when getting the customer strokes')

@@ -8,7 +8,6 @@ type Props = {
 
 const Misdata = async(props: Props) => {
   const contract = await getuniquescontract(props.id);
-  console.log(contract);
   return (
     <div className='h-screen'>
       <Mainnavbar />

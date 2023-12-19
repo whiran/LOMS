@@ -3,10 +3,13 @@
  import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import Mainnavbar from "@/components/Mainnavbar";
+import Provider from "@/components/Provider";
+import { MyProvider } from "@/context/MyContext";
+import { Toaster } from "@/components/ui/toaster";
 
 
 
-//protected view layout
+//protected view layout for admin
 
  const DashbordLayout = async({
   children
@@ -14,28 +17,19 @@ import Mainnavbar from "@/components/Mainnavbar";
   children: React.ReactNode;
 }) => {
 
-  //check the session
-  const session = await getServerSession(authOptions);
+ 
   
-  
-  if(!session || !session.user?.email){
-    //if it is not show this content
-    return(
-      <div className="h-screen  flex flex-col bg-blue-100">
-         <div className="h-[9vh]">
-           <Mainnavbar />
-         </div>
-          <div className="flex justify-center items-center h-full">
-            <p className="text-red-500 text-3xl">You don&apos;t have access to this page! Please sign in.</p>
-          </div>
-      </div>
-    )
-  }
   return (
-    //if the session is available allow the children
-      <div className="h-full bg-slate-100">  
-        {children}
-      </div>
+    //for admin
+    <>
+    <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80] bg-gray-900 lg:flex lg:w-[20%] lg:flex-col lg:fixed lg_inset-y-0">
+      <Sidebar />
+    </div>
+    <main className="md:pl-72 lg:pl-[20%]">
+      {children}
+    </main>
+    <Toaster />
+  </>
   );
 }
 

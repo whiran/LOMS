@@ -70,7 +70,7 @@ const Userinputforcare = (props: Props) => {
       <td className='border border-black'><input type='text' className='w-32 border bg-white ' value={zoordes} onChange={(e) => setZoordes(e.target.value)}/></td>
       <td className='border border-black'><input type='text' className='w-32 border bg-white ' value={mpart} onChange={(e) => setMpart(e.target.value)}/></td>
       <td className='border border-black'><input type='text' className='w-40 border bg-white ' value={coo} onChange={(e) => setCoo(e.target.value)}/></td>
-      <td className='border border-black'><input type='text' className='w-16 border bg-white ' value={caretext} onChange={(e) => setCaretext(e.target.value)} onKeyPress={handleenterpress}/></td>
+      <td className='border border-black'><input type='text' className='w-20 border bg-white ' value={caretext} onChange={(e) => setCaretext(e.target.value)} onKeyPress={handleenterpress}/></td>
     </tr>
   )
 }

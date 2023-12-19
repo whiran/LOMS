@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 
 //get the artwork numbers
+// stroke number is unique to the printer there for he can get all the orders 
 
 
 export const getart = async( stroke: string,contractno: string) => {
