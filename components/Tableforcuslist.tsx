@@ -19,10 +19,10 @@ const Tableforcuslist = ({results} : userprops) => {
   return (
     <table className="w-full bg-slate-300 overflow-auto rounded-md">
     <thead>
-      <tr>
-        <th>Email</th>
-        <th>Created at</th>
-        <th>Updated at</th>
+      <tr className="border-b-2">
+        <th className="font-normal text-left">Email</th>
+        <th className="font-normal text-left">Created at</th>
+        <th className="font-normal text-left">Updated at</th>
       </tr>
     </thead>
     <tbody>

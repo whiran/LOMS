@@ -2,14 +2,21 @@
 import { caredata, constractdata, otherdata, quantitydata } from '@/app/actions/api/getalllabeldata';
 import { getorders, getpendingorders, getprocessingorders, getcompletedorders } from '@/app/actions/api/getorders';
 import Mainnavbar from '@/components/Mainnavbar';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+
 
 import React from 'react'
 
 type Props = {}
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const session = await getServerSession(authOptions);
+  const userid:string = session?.user.id as string
+
+
   if(params.id == 'order'){
-    const fetcheddata = await getorders();
+    const fetcheddata = await getorders(userid);
   return (
     <div className='bg-slate-100 h-screen flex flex-col'>
        <div className="h-[9vh]">
@@ -39,7 +46,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       </div>
   )
   }else if(params.id == 'process'){
-    const fetcheddata = await getprocessingorders();
+    const fetcheddata = await getprocessingorders(userid);
     return (
       <div className='bg-slate-100 h-screen flex flex-col'>
           <div className="h-[9vh]">
@@ -69,7 +76,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       </div>
     )
   }else if(params.id == 'pending'){
-    const fetcheddata = await getpendingorders()
+    const fetcheddata = await getpendingorders(userid)
     return(
       <div className='bg-slate-100 h-screen flex flex-col'>
           <div className="h-[9vh]">
@@ -99,7 +106,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       </div>
     )
   }else if(params.id == 'complete'){
-    const fetcheddata = await getcompletedorders();
+    const fetcheddata = await getcompletedorders(userid);
     return(
       <div className='bg-slate-100 h-screen flex flex-col'>
           <div className="h-[9vh]">

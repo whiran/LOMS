@@ -1,7 +1,8 @@
 'use server'
 import prisma from "@/lib/prisma";
 import nodemailer from 'nodemailer';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 //place order admin, customer
 
@@ -33,8 +34,8 @@ export const placeorder = async function placeorder(strokenum: string, contractn
         port: 465,
         secure: true,
         auth: {
-          user: 'simple.things.tj@gmail.com', 
-          pass: 'peic qxps fdwi oxrs'  
+          user: process.env.EUser, 
+          pass: process.env.Epass,  
         }
       });
       const htmlContent = `
@@ -95,7 +96,7 @@ export const placeorder = async function placeorder(strokenum: string, contractn
       `;
 
       await transporter.sendMail({
-        from: 'simple.things.tj@gmail.com',   
+        from: process.env.EUser,   
         to: 'nalindume@gmail.com', 
         subject: `Order Placed successfully 🚀`,
         html: htmlContent,

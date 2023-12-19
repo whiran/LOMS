@@ -89,7 +89,7 @@ const MISinterface = ({processCount, pendingCount, completeCount, totalCount, co
       </div>
         <div className='flex flex-row justify-between 2xl:h-[15%]'>
           <div className='bg-white p-4 w-1/5 felx flex-col hover:bg-stone-50'>
-            <div className='text-sm hover:text-green-600 hover:font-semibold text-center  2xl:text-lg'><Link href={'/protected/misreport/order'}>Total Order Count</Link></div>
+            <div className='text-sm hover:text-green-600 hover:font-semibold text-center  2xl:text-lg'><Link href={'/protected/misreport/total'}>Total Order Count</Link></div>
             <p className='text-center text-lg font-semibold'>{totalCount}</p>
           </div>
           

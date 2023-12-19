@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import bcrypt from 'bcryptjs'
 import { updatecusdata } from "@/app/actions/api/updatecusdata";
+import { deletecusandsubaccount } from "@/app/actions/api/deletecusandsubacount";
 
 
 
@@ -154,7 +155,7 @@ const Createuser = (props: Props) => {
                   <td>{result.createdAt.getUTCFullYear()}-{result.createdAt.getUTCMonth()+1}-{result.createdAt.getUTCDate()}</td>
                   <td>{result.updatedAt.getUTCFullYear()}-{result.updatedAt.getUTCMonth()+1}-{result.updatedAt.getUTCDate()}</td>
                   <td className="w-32 "> <SheetTrigger className="w-full"><Button className="w-full rounded-md bg-amber-300 hover:bg-amber-400" onClick={(e) => {setTempemail(result.email); setTemppass(result.password); setCurrentemail(result.email)}}>Edit</Button></SheetTrigger></td>
-                  <td className="w-32 "><Button className="w-full rounded-md bg-red-500 hover:bg-red-600">Delete</Button></td>
+                  <td className="w-32 "><Button className="w-full rounded-md bg-red-500 hover:bg-red-600" onClick={() =>{deletecusandsubaccount(result.id);  setTemp(!temp);}}>Delete</Button></td>
                 </tr>
               ))}
               <SheetContent side={"right"}>

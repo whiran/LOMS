@@ -50,7 +50,7 @@ type Props = {
     washsimbol: string;
     sizeration: string;
     state: string;
-    userid: string;
+    userid: string | null;
     createdAt: Date;
     updatedAt: Date;
     ordervalue: number | null;
