@@ -45,7 +45,7 @@ const Orderqty = (props: Props) => {
       [orderId]: quantity,
      
     }));
-    console.log(quantities[orderId])
+   
   };
 
   const handleSubmit = async(orderId: string) => {
@@ -54,7 +54,7 @@ const Orderqty = (props: Props) => {
     // Here, you can save the quantity to a variable or perform other operations
     await handleQuantityChange(orderId, quantities[orderId]);
     const result = await orderqty(orderId,quantity);
-    console.log(result)
+
     setBoolval(!boolval);
   };
   return (

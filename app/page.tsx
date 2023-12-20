@@ -11,7 +11,7 @@ import Sidebarsub from '@/components/Sidebarsub';
 export default async function Home() {
   const session = await getServerSession(authOptions);
   const userType:string = session?.user.userType as string
-  console.log(userType)
+  
 
   const rendercom = () => {
     switch(userType){

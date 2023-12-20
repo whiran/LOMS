@@ -60,7 +60,6 @@ useEffect(() => {
   if (status === 'authenticated') {
       router.refresh();
       if (session.user.userType === 'admin') {
-        console.log('Admin logged in');
         router.push('/protected/dashbord'); // Route for admin dashboard
       } else if(session.user.userType === 'user') {
         router.push('/users/dashbord'); // Route for other user types

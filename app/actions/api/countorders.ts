@@ -132,7 +132,7 @@ export async function getorderprocessing(id: string){
       })
   });
 
-  console.log('subusers processing order count:', totalsubusercount)
+ 
 
 
     //by admin
@@ -210,7 +210,7 @@ export async function getorderpending(id:string) {
           })
       });
     
-      console.log('subusers pending order count:', totalsubusercount)
+     
     
 
     const ordersofcustomers = orderCount._count.id
@@ -291,7 +291,7 @@ export async function getordercomplete(id:string) {
           })
       });
     
-      console.log('subusers completed order count:', totalsubusercount)
+    
  
     //by admin
     const admincount = await prisma.order.count({

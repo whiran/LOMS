@@ -2,8 +2,9 @@ import Mainnavbar from '@/components/Mainnavbar'
 import React from 'react'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
-import { getcusorders, getorders } from '@/app/actions/api/getorders';
-
+import { getorders } from '@/app/actions/api/getorders';
+import { Text} from 'lucide-react'
+import Link from 'next/link';
 
 type Props = {}
 
@@ -11,7 +12,7 @@ const page = async (props: Props) => {
   const session = await getServerSession(authOptions);
   const userid:string = session?.user.id as string
 
-  const fetcheddata = await getcusorders(userid);
+  const fetcheddata = await getorders(userid);
   return (
     <div className='bg-slate-100 h-screen flex flex-col'>
     <div className="h-[9vh]">
@@ -26,6 +27,7 @@ const page = async (props: Props) => {
            <th className="font-normal text-left">Created User Id</th>
            <th className="font-normal text-left">Ourside</th>
            <th className="font-normal text-left">Customerside</th>
+           <th className='w-6'></th>
          </tr>
          </thead>
        <tbody>
@@ -35,6 +37,7 @@ const page = async (props: Props) => {
              <td>{data.userid}</td>
              <td>{data.state}</td>
              <td>{data.orderstatefromuser}</td>
+             <td className='w-6'><Link href={`/protected/misreport/total/${data.id}`}><Text className='hover:text-cyan-400'/></Link></td>
            </tr>
          ))}
        </tbody>
