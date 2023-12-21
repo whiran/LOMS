@@ -4,7 +4,9 @@ import { getcontract } from "@/app/actions/api/getcontract";
 import { getcontractnumbers } from "@/app/actions/api/getcontractnumbers";
 import { placeorder } from "@/app/actions/api/placeorder";
 import { useEffect, useState } from "react";
-
+import { useToast } from "@/components/ui/use-toast"
+import { ToastAction } from "@/components/ui/toast"
+import {TailSpin } from  'react-loader-spinner'
 
 type Props = {
   id: string;
@@ -23,6 +25,8 @@ const Placeorder = (props: Props) => {
   const [sizeration,setSizeration] = useState('');
   const [qty,setQty] = useState(0);
   const [state,setState] = useState('notconform');
+  const { toast } = useToast()
+  const [processing, setProcessing] = useState(false);
   
   //get the contract data
 useEffect(() => {
@@ -44,10 +48,14 @@ useEffect(() => {
 
   
   const handleclick = async() => {
+    setProcessing(true);
     const result = await placeorder(strokeno,conno,coo,fiber,component,caretext,washsimbol,sizeration,props.id,qty,state);
    
     if(result == 'ok'){
-      alert('successfully aded the record');
+      toast({
+        title: " successfully aded the record..",
+        description: "Order details added.",
+      });
       // Clear the form fields after successful submission
       setCoo('');
       setFiber('');
@@ -58,8 +66,15 @@ useEffect(() => {
       setQty(0);
 
     }else{
-      alert('somthing wrong please try again!!!')
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Something went wrong from the serverside!",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+      setProcessing(false); 
     }
+    setProcessing(false); 
   }
   return (
     <div className=" bg-[#F8DFD4] p-6 border-4 border-white rounded-lg">
@@ -105,6 +120,18 @@ useEffect(() => {
       <div className="flex flex-row justify-between mt-2 ">
       <button className="rounded-sm bg-[#C69774] hover:bg-[#5FBDFF] w-2/5" onClick={handleclick}>Submit</button>
       <button className="rounded-sm bg-[#C69774] hover:bg-[#5FBDFF] w-2/5">Preview Artwork</button>
+      </div>
+      <div className="w-full mx-auto flex justify-center items-center mt-2">
+      <TailSpin
+  height="30"
+  width="30"
+  color="#05ed00"
+  ariaLabel="tail-spin-loading"
+  radius="1"
+  wrapperStyle={{}}
+  wrapperClass=""
+  visible={processing}
+/>
       </div>
     </div>
   )

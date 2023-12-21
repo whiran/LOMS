@@ -11,6 +11,7 @@ import Navbar from '@/components/Navbar'
 import { updateorderbyadmin } from '@/app/actions/api/updateorderbyadmin'
 import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
+import { getartlistcreatedbycustomer } from '@/app/actions/api/customers/getartlistcreatedbycustomer'
 
 type Props = {
   userid:string;
@@ -65,7 +66,7 @@ enum State {
 
 
 
-const Artwork = (props: Props) => {
+const Artworkforcustomer = (props: Props) => {
 
   const [strokes, setStrokes] = useState<stroke[]>([]);
   const [contracts, setContracts] = useState<string[]>([]);
@@ -163,7 +164,7 @@ const fetchartdata = async (id: string) => {
 
 const fetchArt = async () => {
   //stroke and contract no are uniques to printer
-  const fetchedarts = await getart(strokeno, contactno);
+  const fetchedarts = await getartlistcreatedbycustomer(props.userid);
   setArtno(fetchedarts[0] || '');
   setArtnoms(fetchedarts || []);
 };
@@ -327,4 +328,4 @@ const submitdata = async() => {
   )
 }
 
-export default Artwork
+export default Artworkforcustomer

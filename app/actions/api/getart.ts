@@ -18,3 +18,18 @@ export const getart = async( stroke: string,contractno: string) => {
   return artNumbers;
 }
 
+export const getartdata = async( artno: string) => {
+  const arts = await prisma.order.findMany({
+    where:{
+      id: artno,
+    }
+  });
+  
+  if(arts){
+   return arts;
+  }else{
+    return []
+    console.log('error when getting the orderdata');
+  }
+}
+

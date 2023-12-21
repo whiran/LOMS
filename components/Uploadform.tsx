@@ -73,9 +73,8 @@ export function UploadForm(props:Props) {
     </div>
     <div className='max-w-md p-4 bg-white shadow-lg rounded-lg  w-full h-full'>
       <h2 className="text-xl font-semibold mb-4">XML upload history</h2>
-      <ScrollArea className="h-72 w-48 rounded-md border">
+      <ScrollArea className="h-[80%] w-48 rounded-md border">
       <div className="p-4">
-        <h4 className="mb-4 text-sm font-medium leading-none">Day</h4>
         {props.xml.map((tag) => (
           <>
             <div key={tag.id} className="text-sm">

@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth/next';
 import { getstrokedata } from '@/app/actions/api/getstrokedata';
 import { getcreatedusersstrokes, getstrokeandconadmin } from '@/app/actions/api/customers/getcreatedusersstrokes';
 import Artworkforcustomer from '@/components/Artworkforcustomer';
+import Artworkforsubuser from '@/components/ARtworkforsubuser';
 
 
 type Props = {}
@@ -33,7 +34,7 @@ const Page = async (props: Props) => {
         <Mainnavbar />
        </div>
        <div className='h-full w-full'>
-        <Artworkforcustomer userid={userid} strokedata={strokedata}/>
+        <Artworkforsubuser userid={userid} strokedata={strokedata}/>
        </div>
     </div>
   )

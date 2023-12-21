@@ -46,6 +46,7 @@ const Createsubuser = (props: Props) => {
   const [tempemail,setTempemail] = useState('');
   const [currentemail,setCurrentemail] = useState('');
   const [temppass,setTemppass] = useState('');
+  const [uid,setUid] = useState('');
   const [loading, setLoading] = useState(false);  // for check the loading state
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const Createsubuser = (props: Props) => {
   return (
     <div className="h-full w-full  flex flex-col">
     <div className="w-10/12 mt-4 ml-8">
-      <p className="subpixel-antialiased text-xs font-thin ">customer accounts</p>
+      <p className="subpixel-antialiased text-sm font-thin ">customer accounts</p>
       <h1 className="text-xl font-bold subpixel-antialiased mt-2">Manage Accounts</h1>
     </div>
     <div className="w-10/12 ml-8 mt-4">
@@ -149,7 +150,7 @@ const Createsubuser = (props: Props) => {
                 <td>{result.email}</td>
                 <td>{result.createdAt.getUTCFullYear()}-{result.createdAt.getUTCMonth()+1}-{result.createdAt.getUTCDate()}</td>
                 <td>{result.updatedAt.getUTCFullYear()}-{result.updatedAt.getUTCMonth()+1}-{result.updatedAt.getUTCDate()}</td>
-                <td className="w-32 "> <SheetTrigger className="w-full"><Button className="w-full rounded-md bg-amber-300 hover:bg-amber-400" onClick={(e) => {setTempemail(result.email); setTemppass(result.password); setCurrentemail(result.email)}}>Edit</Button></SheetTrigger></td>
+                <td className="w-32 "> <SheetTrigger className="w-full"><Button className="w-full rounded-md bg-amber-300 hover:bg-amber-400" onClick={(e) => {setTempemail(result.email);setUid(result.id) ;setTemppass('dfdddff'); setCurrentemail(result.email)}}>Edit</Button></SheetTrigger></td>
                 <td className="w-32 "><Button className="w-full rounded-md bg-red-500 hover:bg-red-600" onClick={() =>{deletecusandsubaccount(result.id);  setTemp(!temp);}}>Delete</Button></td>
               </tr>
             ))}

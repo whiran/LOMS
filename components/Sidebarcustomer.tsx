@@ -71,12 +71,7 @@ const routesone = [
 ];
 
 const routestwo =[
-  {
-    label: 'Dashboard',
-    icon: LayoutDashboard,
-    href: '/users/dashbord',
-    color: "text-sky-500"
-  },
+ 
   {
     label: 'ArtWorks',
     icon: Component,
@@ -94,12 +89,6 @@ const routestwo =[
     icon: FolderPlus,
     color: 'text-amber-500',
     href: '/users/placeorders'
-  },
-  {
-    label: 'Order dashbord',
-    icon: Gauge ,
-    color: "text-yellow-950",
-    href: '/protected/orderdash'
   },
   {
     label: 'create user account',

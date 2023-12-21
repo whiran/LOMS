@@ -14,7 +14,9 @@ const page = async (props: Props) => {
 
   const result:string[] = await getcreatedcustomersstroke(userid)
   return (
-    <Placeorderforsub id={userid} strokes={result}/>
+    <div className='flex justify-center items-center h-full'>
+     <Placeorderforsub id={userid} strokes={result}/>
+    </div>
   )
 }
 

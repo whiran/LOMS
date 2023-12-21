@@ -1,23 +1,21 @@
-'use client'
 import React from 'react'
-import {  Line } from 'react-chartjs-2';
+
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -51,44 +49,40 @@ export const options = {
 };
 
 
-const Allbarchart = (props: Props) => {
 
+
+const Barr = (props: Props) => {
   const { contractdata, caredata, otherdata, quntitydata } = props;
-  
- 
+
   const data = {
     labels,
     datasets: [
       {
         label: 'Contracts',
         data: contractdata.map((con) => con.count),
-        borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Care',
         data: caredata.map(item => item.count),
-        borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
-        label: 'Other',
+        labels: 'Other',
         data: otherdata.map(item => item.count),
-        borderColor: 'rgb(217, 235, 53)',
         backgroundColor: 'rgba(217, 235, 53,0.5)'
       },
       {
-        label: 'Quantity',
+        labels: 'Quantity',
         data: quntitydata.map(item => item.count),
-        bordercolor: 'rgb(75, 27, 247)',
         backgroundColor: 'rgba(75, 27, 247,0.5)'
       }
     ],
   };
-  
+
   return (
-    <Line data={data} options={options} />
+    <Bar options={options} data={data} />
   )
 }
 
-export default Allbarchart
+export default Barr

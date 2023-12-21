@@ -45,24 +45,6 @@ const routesone = [
     href: '/protected/manualdata'
   },
   {
-    label: 'Enter Orderqty',
-    icon: Grid2X2,
-    color: "text-yellow-500",
-    href: '/protected/orderqty'
-  },
-  {
-    label: 'Order dashbord',
-    icon: Gauge ,
-    color: "text-yellow-950",
-    href: '/protected/orderdash'
-  },
-  {
-    label: 'pdf content',
-    icon: Scroll,
-    color: "text-zinc-950",
-    href: '/protected/pdfcontent'
-  },
-  {
     label: 'create user account',
     icon: UserPlus,
     color: "text-yellow-300",

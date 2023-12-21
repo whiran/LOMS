@@ -133,12 +133,6 @@ const routetree = [
     icon: FolderPlus,
     color: 'text-amber-500',
     href: '/subuser/placeorder'
-  },
-  {
-    label: 'Order dashbord',
-    icon: Gauge ,
-    color: "text-yellow-950",
-    href: '/subuser/orderdash'
   }
 ]
 

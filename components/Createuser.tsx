@@ -115,25 +115,23 @@ const Createuser = (props: Props) => {
 
   
   return (
-    <div className="h-full w-full  flex flex-col">
+    <div className="h-full w-full  flex flex-col font-mono">
       <div className="w-10/12 mt-4 ml-8">
-        <p className="subpixel-antialiased text-xs font-thin ">customer accounts</p>
-        <h1 className="text-xl font-bold subpixel-antialiased mt-2">Manage Accounts</h1>
+        <p className="subpixel-antialiased text-sm font-light ">customer accounts</p>
+        <h1 className="text-2xl font-bold subpixel-antialiased mt-2">Manage Accounts</h1>
       </div>
-      <div className="w-10/12 ml-8 mt-4">
-        <div className="subpixel-antialiased text-sm font-thin flex flex-row gap-8">
-          <p className="w-[20%]">Email</p>
-          <p className="w-[20%]">Password</p>
-        </div>
-        <div className="text-lg font-normal flex flex-row gap-8 mt-2 mb-4">
-          <input type="text" className="w-[20%] border" placeholder="Email" value={email} required onChange={e => setEmail(e.target.value)}/>
-          <input type="password" className="w-[20%] border" placeholder="Password" value={password} required onChange={e => setPassword(e.target.value)}/>
-          <div className="w-full mx-4">
-            <button className="w-16 mx-2 rounded-md bg-amber-50 border hover:bg-amber-100" onClick={reset}>Reset</button>
-            <button className="w-16 mx-2 rounded-md bg-amber-400 border hover:bg-amber-500" onClick={handleclick}>Enter</button>
-          </div>
+      <div className="w-10/12 ml-8 mt-4 grid grid-cols-3 grid-rows-2">
+        <div className="subpixel-antialiased text-sm font-thin"><p className="w-[20%] text-left">Email</p></div>
+        <div className="subpixel-antialiased text-sm font-thin"><p className="w-[20%] text-left">Password</p></div>
+        <div className=""></div>
+        <div className="text-lg font-normal"> <input type="text" className="w-[80%] border" placeholder="Email" value={email} required onChange={e => setEmail(e.target.value)}/></div>
+        <div className="text-lg font-normal"> <input type="password" className="w-[80%] border" placeholder="Password" value={password} required onChange={e => setPassword(e.target.value)}/></div>
+        <div className="w-full">
+        <button className="w-[40%] mx-2 rounded-md bg-amber-50 border hover:bg-amber-100" onClick={reset}>Reset</button>
+            <button className="w-[40%] mx-2 rounded-md bg-amber-400 border hover:bg-amber-500" onClick={handleclick}>Enter</button>
         </div>
       </div>
+      
       
       <div className="w-10/12 mx-auto mt-4 ml-8 h-full overflow-auto">
         <div>
@@ -154,7 +152,7 @@ const Createuser = (props: Props) => {
                   <td>{result.email}</td>
                   <td>{result.createdAt.getUTCFullYear()}-{result.createdAt.getUTCMonth()+1}-{result.createdAt.getUTCDate()}</td>
                   <td>{result.updatedAt.getUTCFullYear()}-{result.updatedAt.getUTCMonth()+1}-{result.updatedAt.getUTCDate()}</td>
-                  <td className="w-32 "> <SheetTrigger className="w-full"><Button className="w-full rounded-md bg-amber-300 hover:bg-amber-400" onClick={(e) => {setTempemail(result.email); setTemppass(result.password); setCurrentemail(result.email)}}>Edit</Button></SheetTrigger></td>
+                  <td className="w-32 "> <SheetTrigger className="w-full"><Button className="w-full rounded-md bg-amber-300 hover:bg-amber-400" onClick={(e) => {setTempemail(result.email); setTemppass('dfddfdf'); setCurrentemail(result.email)}}>Edit</Button></SheetTrigger></td>
                   <td className="w-32 "><Button className="w-full rounded-md bg-red-500 hover:bg-red-600" onClick={() =>{deletecusandsubaccount(result.id);  setTemp(!temp);}}>Delete</Button></td>
                 </tr>
               ))}

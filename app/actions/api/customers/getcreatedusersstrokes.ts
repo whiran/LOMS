@@ -27,3 +27,43 @@ export const getcreatedusersstrokes = async (id: string) => {
   return [];
 }
 }
+
+export const getstrokeandconadmin = async (id: string) => {
+  try{
+    const result = await prisma.customer.findUnique({
+      where: {
+        ownid: id,
+      }
+    })
+  
+    const whocreated = result?.createdby
+  
+    const strokes = await prisma.stroke.findMany({
+      where: {
+        userid: whocreated,
+      },
+      select: {
+        strokeno: true,
+        contracts: {
+          select: {
+            constractno: true,
+          },
+        },
+      },
+    });
+    const strokeAndContracts: { strokeno: string; contractNumbers: string[] }[] = [];
+
+    strokes.forEach((stroke) => {
+      const contracts = stroke.contracts.map((contract) => contract.constractno);
+      strokeAndContracts.push({
+        strokeno: stroke.strokeno,
+        contractNumbers: contracts,
+      });
+    });
+   
+    return strokeAndContracts
+  } catch(error){
+    console.log('error form get the strokes based on who creted the customers.')
+    return [];
+  }
+}

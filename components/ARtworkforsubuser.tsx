@@ -11,6 +11,9 @@ import Navbar from '@/components/Navbar'
 import { updateorderbyadmin } from '@/app/actions/api/updateorderbyadmin'
 import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
+import { getartlistcreatedbycustomer } from '@/app/actions/api/customers/getartlistcreatedbycustomer'
+import { getartlistcreatedbysubuser } from '@/app/actions/api/subuser/getartlistcreatedbysubuser'
+import { updateorderbycusandsub } from '@/app/actions/api/subuser/updateorderbycusandsub'
 
 type Props = {
   userid:string;
@@ -63,9 +66,15 @@ enum State {
   hold = 'hold',
 }
 
+enum Orderfromuser {
+  conform = 'conform',
+  notconform = 'notconform',
+  cancelled = 'cancelled'
+}
 
 
-const Artwork = (props: Props) => {
+
+const Artworkforsubuser = (props: Props) => {
 
   const [strokes, setStrokes] = useState<stroke[]>([]);
   const [contracts, setContracts] = useState<string[]>([]);
@@ -84,7 +93,7 @@ const Artwork = (props: Props) => {
     washsymbol: '',
     size: '',
     qty: 0,
-    state: State.pending
+    orderstatefromuser: Orderfromuser.notconform
   });
   const strokref = useRef<HTMLInputElement>(null);
   const connoref = useRef<HTMLInputElement>(null);
@@ -109,7 +118,7 @@ const Artwork = (props: Props) => {
       washsymbol: washsymbolref.current?.value as string ?? '',
       size: sizeref.current?.value as string ?? '',
       qty: Number(qtyref.current?.value) ?? 0, 
-      state: sateref.current?.value as State ?? 'pending',
+      orderstatefromuser: sateref.current?.value as Orderfromuser ?? 'notconform',
     })
   }
    
@@ -156,14 +165,14 @@ const fetchartdata = async (id: string) => {
     washsymbol: alldata[0].washsimbol,
     size: alldata[0].sizeration,
     qty: alldata[0].qty ?? 0,
-    state: alldata[0].state as State
+    orderstatefromuser: alldata[0].orderstatefromuser as Orderfromuser
   })
  
 }
 
 const fetchArt = async () => {
   //stroke and contract no are uniques to printer
-  const fetchedarts = await getart(strokeno, contactno);
+  const fetchedarts = await getartlistcreatedbysubuser(props.userid);
   setArtno(fetchedarts[0] || '');
   setArtnoms(fetchedarts || []);
 };
@@ -188,7 +197,7 @@ const handleUserUpdate = (fieldName: string, value: string | number | State ) =>
 //update order
 
 const submitdata = async() => {
-  const resut = await updateorderbyadmin(artno,artdata.strkeno,artdata.conno,artdata.coo,artdata.fiber,artdata.component,artdata.caretext,artdata.washsymbol,artdata.size,artdata.state,artdata.qty)
+  const resut = await updateorderbycusandsub(artno,artdata.strkeno,artdata.conno,artdata.coo,artdata.fiber,artdata.component,artdata.caretext,artdata.washsymbol,artdata.size,artdata.orderstatefromuser,artdata.qty)
   if(resut){
     toast({
       title: "order has been updated.",
@@ -269,11 +278,11 @@ const submitdata = async() => {
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Qty:</label><input onChange={(e) => {
                         handleUserUpdate('qty',parseInt(e.target.value))
                       }} value={artdata.qty} type='number' className='rounded-sm w-2/6'/></div>
-                      <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>State:</label><select value={artdata.state} className='rounded-sm w-2/6' onChange={(e) => {
-                        handleUserUpdate('state',e.target.value as State)
-                      }}><option value="pending">pending</option><option value="processing">processing</option>
-                      <option value="completed">completed</option>
-                      <option value="hold">hold</option></select></div>
+                      <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>State:</label><select value={artdata.orderstatefromuser} className='rounded-sm w-2/6' onChange={(e) => {
+                        handleUserUpdate('state',e.target.value as Orderfromuser)
+                      }}><option value="conform">conform</option><option value="notconform">notconform</option>
+                      <option value="cancelled">cancelled</option>
+                      </select></div>
                       
                     </div>
                     <div className='w-[10%] flex flex-col justify-center items-center h-full bg-sky-400 hover:bg-sky-500' onClick={submitdata}>
@@ -327,4 +336,4 @@ const submitdata = async() => {
   )
 }
 
-export default Artwork
+export default Artworkforsubuser
