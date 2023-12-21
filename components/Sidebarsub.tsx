@@ -111,12 +111,6 @@ const routestwo =[
 
 const routetree = [
   {
-    label: 'Dashboard',
-    icon: LayoutDashboard,
-    href: '/subuser/dashbord',
-    color: "text-sky-500"
-  },
-  {
     label: 'ArtWorks',
     icon: Component,
     href: '/subuser/artwork',

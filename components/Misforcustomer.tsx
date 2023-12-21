@@ -4,13 +4,23 @@ type Props = {}
 
 const Misforcustomer = (props: Props) => {
   return (
-    <div className='felx flex-col h-screen w-full'>
-      <div className='flex flex-row h-[30%] bg-slate-400]'>
-        <div className=''>1</div>
-        <div className=''>2</div>
-        <div className=''>3</div>
-        <div className=''>4</div>
-      </div>
+    <div className='grid grid-cols-4 grid-rows-4 w-full h-screen gap-3'>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
+      <div className='bg-slate-200 h-full w-full'>test</div>
     </div>
   )
 }

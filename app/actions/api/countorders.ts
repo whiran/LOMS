@@ -301,7 +301,7 @@ export async function getordercomplete(id:string) {
       }
     })
 
-    const counts = admincount + ordersofcustomers;
+    const counts = admincount + ordersofcustomers + totalsubusercount;
 
     return counts;
   }catch(error){

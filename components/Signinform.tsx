@@ -62,9 +62,9 @@ useEffect(() => {
       if (session.user.userType === 'admin') {
         router.push('/protected/dashbord'); // Route for admin dashboard
       } else if(session.user.userType === 'user') {
-        router.push('/users/dashbord'); // Route for other user types
+        router.push('/users/artworks'); // Route for other user types
       } else if(session.user.userType === 'subuser'){
-        router.push('/subuser/dashbord');
+        router.push('/subuser/artwork');
       }
   }
 }, [router, status, session]);
