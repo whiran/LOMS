@@ -13,12 +13,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 
 
 
 type Props = {}
 
-const Navbar = (props: Props) => {
+const Navbar = async (props: Props) => {
+  const session = await getServerSession(authOptions);
+  const usertype = session?.user.userType;
+
   return (
     <div className='flex items-center p-2 bg-[#ADC4CE] text-white text-sm w-full gap-2'>
       <Mobilesidebar apiLimitCount={0} isPro={false}/>
@@ -37,7 +42,19 @@ const Navbar = (props: Props) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
         <DropdownMenuItem>Help</DropdownMenuItem>
-        <DropdownMenuItem><Link href='/protected/settings'>Settings</Link></DropdownMenuItem>
+        {usertype === 'admin' ? (
+                <DropdownMenuItem>
+                  <Link href='/protected/settings'>Settings</Link>
+                </DropdownMenuItem>
+              ) : usertype === 'user' ? (
+                <DropdownMenuItem>
+                  <Link href='/users/settings'>Settings</Link>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem>
+                  <Link href='/subuser/settings'>Settings</Link>
+                </DropdownMenuItem>
+              )}
         <DropdownMenuSeparator />
         <DropdownMenuItem><Link href='/auth/signout'>Log out</Link></DropdownMenuItem>
       </DropdownMenuContent>

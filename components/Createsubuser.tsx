@@ -116,20 +116,17 @@ const Createsubuser = (props: Props) => {
       <p className="subpixel-antialiased text-sm font-thin ">customer accounts</p>
       <h1 className="text-xl font-bold subpixel-antialiased mt-2">Manage Accounts</h1>
     </div>
-    <div className="w-10/12 ml-8 mt-4">
-      <div className="subpixel-antialiased text-sm font-thin flex flex-row gap-8">
-        <p className="w-[20%]">Email</p>
-        <p className="w-[20%]">Password</p>
-      </div>
-      <div className="text-lg font-normal flex flex-row gap-8 mt-2 mb-4">
-        <input type="text" className="w-[20%] border" placeholder="Email" value={email} required onChange={e => setEmail(e.target.value)}/>
-        <input type="password" className="w-[20%] border" placeholder="Password" value={password} required onChange={e => setPassword(e.target.value)}/>
-        <div className="w-full mx-4">
-          <button className="w-16 mx-2 rounded-md bg-amber-50 border hover:bg-amber-100" onClick={reset}>Reset</button>
-          <button className="w-16 mx-2 rounded-md bg-amber-400 border hover:bg-amber-500" onClick={handleclick}>Enter</button>
+    <div className="w-10/12 ml-8 mt-4 grid grid-cols-3 grid-rows-2">
+        <div className="subpixel-antialiased text-sm font-thin"><p className="w-[20%] text-left">Email</p></div>
+        <div className="subpixel-antialiased text-sm font-thin"><p className="w-[20%] text-left">Password</p></div>
+        <div className=""></div>
+        <div className="text-lg font-normal"> <input type="text" className="w-[80%] border" placeholder="Email" value={email} required onChange={e => setEmail(e.target.value)}/></div>
+        <div className="text-lg font-normal"> <input type="password" className="w-[80%] border" placeholder="Password" value={password} required onChange={e => setPassword(e.target.value)}/></div>
+        <div className="w-full">
+        <button className="w-[40%] mx-2 rounded-md bg-amber-50 border hover:bg-amber-100" onClick={reset}>Reset</button>
+            <button className="w-[40%] mx-2 rounded-md bg-amber-400 border hover:bg-amber-500" onClick={handleclick}>Enter</button>
         </div>
       </div>
-    </div>
     
     <div className="w-10/12 mx-auto mt-4 ml-8 h-full overflow-auto">
       <div>

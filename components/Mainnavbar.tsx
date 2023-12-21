@@ -21,6 +21,8 @@ import { Button } from "@/components/ui/button"
 
 const Mainnavbar = async () => {
   const session = await getServerSession(authOptions);
+  const usertype = session?.user.userType;
+
   
   
   return (
@@ -42,15 +44,27 @@ const Mainnavbar = async () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Help</DropdownMenuItem>
-                  <DropdownMenuItem><Link href='/protected/settings'>Settings</Link></DropdownMenuItem>
+                  {usertype === 'admin' ? (
+                <DropdownMenuItem>
+                  <Link href='/protected/settings'>Settings</Link>
+                </DropdownMenuItem>
+              ) : usertype === 'user' ? (
+                <DropdownMenuItem>
+                  <Link href='/users/settings'>Settings</Link>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem>
+                  <Link href='/subuser/settings'>Settings</Link>
+                </DropdownMenuItem>
+              )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem><Link href='/auth/signout'>Log out</Link></DropdownMenuItem>
                 </DropdownMenuContent>
            </DropdownMenu>
           ):(
           <>
-          <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signup'>Signup</Link>
-          <Link className='mx-1 hover:bg-sky-700 p-3' href='/auth/signin'>Signin</Link>
+          <Link className='mx-1 hover:bg-sky-700 p-2 rounded-md' href='/auth/signup'>Signup</Link>
+          <Link className='mx-1 hover:bg-sky-700 p-2 rounded-md' href='/auth/signin'>Signin</Link>
           </>
         )}
         

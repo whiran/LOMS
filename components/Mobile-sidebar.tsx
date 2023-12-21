@@ -6,6 +6,8 @@ import Sidebar from './Sidebar';
 import { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react"
 import { useMyContext } from '@/context/MyContext';
+import Sidebarcustomer from './Sidebarcustomer';
+import Sidebarsub from './Sidebarsub';
 
 const Mobilesidebar = (
   {
@@ -19,7 +21,22 @@ const Mobilesidebar = (
   const [isMounted, setIsMounted] = useState(false);
   const {state6, setState6} = useMyContext();
   const { data: session, status } = useSession();
-  setState6(session?.user.id as string);
+  const userrole = session?.user.userType as string;
+  
+  //render the different sidebars
+
+  const rendersidebar =  () => {
+    switch(userrole){
+      case 'admin':
+        return <Sidebar />;
+      case 'user':
+        return <Sidebarcustomer />;
+      case 'subuser':
+        return <Sidebarsub />;
+      default:
+        return <Sidebar />
+    }
+  }
 
   
   useEffect(() => {
@@ -34,15 +51,11 @@ const Mobilesidebar = (
   
   return (
     <Sheet>
-      
-       
-          <SheetTrigger>
+      <SheetTrigger>
             <Menu  className='md:hidden'/>
           </SheetTrigger>
-        
-     
       <SheetContent side="left" className='p-0'>
-        <Sidebar />
+        {rendersidebar()}
       </SheetContent>
     </Sheet>
   );
