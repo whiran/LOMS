@@ -2,8 +2,6 @@ import React from 'react'
 import Link from 'next/link';
 import Mainnavbar from './Mainnavbar';
 import Cusbarchart from './cusbarchart';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { getServerSession } from 'next-auth/next';
 
 type Props = {}
 type MonthlyData = { month: number; count: number }[]; 
@@ -19,19 +17,14 @@ type inputs = {
   monthdatas: Date[];
 }
 
-const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,monthrecords,monthdatas}:inputs) => {
-
-  const session = await getServerSession(authOptions);
-  const usertype = session?.user.userType
-  let links = (usertype === 'user') ?  'users' : 'subuser';
-  
+const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecords,monthdatas}:inputs) => {
   return (
     <div className='h-screen w-full flex flex-col'>
     <div className='h-[8vh] '>
       <Mainnavbar />
     </div>
     <div className='grid grid-row-4 grid-cols-5 gap-1 mt-1 h-full '>
-       <Link href={`/${links}/misreport/total`}>
+       <Link href=''>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Total Orders</p>
@@ -39,7 +32,7 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
         </div>
       </div>
       </Link>
-      <Link href={`/${links}/misreport/pending`}>
+      <Link href=''>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Pending Orders</p>
@@ -47,7 +40,7 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
         </div>
       </div>
       </Link>
-      <Link href={`/${links}/misreport/processing`}>
+      <Link href=''>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Processing Orders</p>
@@ -55,7 +48,7 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
         </div>
       </div>
       </Link>
-      <Link href={`/${links}/misreport/completed`}>
+      <Link href=''>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Completed Orders</p>
@@ -63,7 +56,7 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
         </div>
       </div>
       </Link>
-      <Link href={`/${links}/misreport/hold`}>
+      <Link href=''>
       <div className='h-full w-full p-4 hover:p-2'>
       <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Hold Orders</p>
@@ -82,7 +75,7 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
       <div className='row-span-3 col-span-1 p-4 hover:p-2'>
         <div className='flex flex-col justify-start items-start h-full w-full border-2 p-2'>
           <p className='font-bold text-lg text-center w-full'>Recent Orders</p>
-          <p className='font-normal text-sm text-center'>You and your subusers have made <span className='font-bold'>{thismonth}</span> orders this month.</p>
+          <p className='font-normal text-sm text-center'>You have made <span className='font-bold'>{thismonth}</span> orders in this month.</p>
           <div className='text-center overflow-auto h-full w-full mt-3'>
             <p className='text-center font-normal mb-2'>Dates</p>
           {monthdatas.map((da, index) => (
@@ -97,4 +90,4 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
   )
 }
 
-export default Misforcustomer
+export default Misforsub

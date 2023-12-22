@@ -130,7 +130,7 @@ const Createsubuser = (props: Props) => {
     
     <div className="w-10/12 mx-auto mt-4 ml-8 h-full overflow-auto">
       <div>
-        <table className="w-full bg-white">
+        <table className="w-full bg-white overflow-auto">
           <thead className="">
             <tr className="border-b-2">
               <th className="font-normal text-left">Email</th>
