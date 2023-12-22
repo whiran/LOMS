@@ -76,6 +76,7 @@ export const getprocessingordercus = async (id:string) => {
     return counts
   }catch(error){
     console.log('got error when counting the proccessing order by cus and sub')
+    return 0;
   }
 }
 
@@ -128,7 +129,85 @@ export const gettotalcompletedcusandsub = async(id:string) => {
       },
     });
 
-    const ordersofcustomers = orderCount._count.id
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        state: 'completed'
+      }
+    });
+
+    const ordersofcustomers = orderCount._count.id + admincount
+
+    return ordersofcustomers
+  }catch(error){
+    console.log('error on get completed orderes cus and sub count');
+    return 0;
+  }
+}
+
+export const gettotalholdcusandsub = async(id:string) => {
+  try{
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+        state: 'hold',
+      },
+    });
+
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        state: 'hold'
+      }
+    });
+
+    const ordersofcustomers = orderCount._count.id + admincount
+
+    return ordersofcustomers
+  }catch(error){
+    console.log('error on get completed orderes cus and sub count');
+    return 0;
+  }
+}
+
+
+export const getcountofordersthismonth = async(id:string) => {
+  try{
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+        createdAt: {
+          gte: startOfMonth.toISOString(),
+          lte: endOfMonth.toISOString(),
+        },
+      },
+    });
+
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        createdAt: {
+          gte: startOfMonth.toISOString(),
+          lte: endOfMonth.toISOString(),
+        },
+      }
+    });
+
+    const ordersofcustomers = orderCount._count.id + admincount
 
     return ordersofcustomers
   }catch(error){

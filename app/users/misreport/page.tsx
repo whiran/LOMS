@@ -3,7 +3,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { getordercomplete, getorderpending, getorderprocessing, totalcount } from "@/app/actions/api/countorders"
 import Misforcustomer from '@/components/Misforcustomer';
-import { getprocessingordercus, gettotalcompletedcusandsub, totcountcus, tototalpendingcusandsub } from '@/app/actions/api/customers/ordercountbycus';
+import { getcountofordersthismonth, getprocessingordercus, gettotalcompletedcusandsub, gettotalholdcusandsub, totcountcus, tototalpendingcusandsub } from '@/app/actions/api/customers/ordercountbycus';
 
 
 type Props = {}
@@ -16,12 +16,14 @@ const page = async (props: Props) => {
   const pendingCountData = await tototalpendingcusandsub(userid);
   const completeCountData = await gettotalcompletedcusandsub(userid);
   const totalCountData = await totcountcus(userid);
+  const holdcountdata = await gettotalholdcusandsub(userid);
+  const thismonthcounttotal = await getcountofordersthismonth(userid);
 
-  console.log('count:',processCountData,pendingCountData,completeCountData,totalCountData)
+  
   
   return (
     <div>
-      <Misforcustomer />
+      <Misforcustomer processing={processCountData} pending={pendingCountData} complete={completeCountData} total={totalCountData} hold={holdcountdata} thismonth={thismonthcounttotal}/>
     </div>
   )
 }
