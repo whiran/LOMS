@@ -1,66 +1,24 @@
-import { Payment, columns } from "@/app/users/misreport/completed/columns"
-import { DataTable } from "@/app/users/misreport/completed/data-table"
+import { Order, columns } from "@/app/users/misreport/total/columns"
+import { DataTable } from "@/app/users/misreport/total/data-table"
 import Mainnavbar from "@/components/Mainnavbar";
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+import { getallorderdata } from "@/app/actions/api/customers/getallorderdata";
 
-async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      amount: 100,
-      status: "pending",
-      stroke: "m@example.com",
-    },
-    {
-      id: "89c4a7d3",
-      amount: 75,
-      status: "pending",
-      stroke: "n@example.com",
-    },
-    {
-      id: "a1b2c3d4",
-      amount: 150,
-      status: "pending",
-      stroke: "o@example.com",
-    },
-    {
-      id: "89c4a7d3",
-      amount: 75,
-      status: "pending",
-      stroke: "n@example.com",
-    },
-    {
-      id: "a1b2c3d4",
-      amount: 150,
-      status: "pending",
-      stroke: "o@example.com",
-    },
-    {
-      id: "a1b2c3d4",
-      amount: 150,
-      status: "pending",
-      stroke: "o@example.com",
-    },
-    {
-      id: "89c4a7d3",
-      amount: 75,
-      status: "pending",
-      stroke: "n@example.com",
-    },
-    {
-      id: "a1b2c3d4",
-      amount: 150,
-      status: "pending",
-      stroke: "o@example.com",
-    },
-    
-    
-  ];
-  
+
+
+type order = {
+  id: string;
+  amount: number | null;
+  status: string;
+  stroke: string;
 }
 
 export default async function DemoPage() {
-  const data = await getData()
+  const session = await getServerSession(authOptions);
+  const userid:string = session?.user.id as string
+
+  const result:Order[] = await getallorderdata(userid)
 
   return (
     <div>
@@ -69,7 +27,7 @@ export default async function DemoPage() {
        <Mainnavbar />
     </div>
       <div className='h-max p-0 m-0 w-full flex justify-center items-center'>
-       <DataTable columns={columns} data={data} />
+       <DataTable columns={columns} data={result} />
       </div>
     </div>
     </div>

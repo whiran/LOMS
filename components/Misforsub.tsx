@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link';
 import Mainnavbar from './Mainnavbar';
 import Cusbarchart from './cusbarchart';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 type Props = {}
 type MonthlyData = { month: number; count: number }[]; 
@@ -17,14 +19,19 @@ type inputs = {
   monthdatas: Date[];
 }
 
-const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecords,monthdatas}:inputs) => {
+const Misforsub = async ({total,pending,processing,complete,hold,thismonth,monthrecords,monthdatas}:inputs) => {
+
+
+  const session = await getServerSession(authOptions);
+  const usertype = session?.user.userType
+  let links = (usertype === 'user') ?  'users' : 'subuser';
   return (
     <div className='h-screen w-full flex flex-col'>
     <div className='h-[8vh] '>
       <Mainnavbar />
     </div>
     <div className='grid grid-row-4 grid-cols-5 gap-1 mt-1 h-full '>
-       <Link href=''>
+       <Link href={`/${links}/misreport/total`}>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Total Orders</p>
@@ -32,7 +39,7 @@ const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecord
         </div>
       </div>
       </Link>
-      <Link href=''>
+      <Link href={`/${links}/misreport/pending`}>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Pending Orders</p>
@@ -40,7 +47,7 @@ const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecord
         </div>
       </div>
       </Link>
-      <Link href=''>
+      <Link href={`/${links}/misreport/processing`}>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Processing Orders</p>
@@ -48,7 +55,7 @@ const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecord
         </div>
       </div>
       </Link>
-      <Link href=''>
+      <Link href={`/${links}/misreport/completed`}>
       <div className='h-full w-full p-4  hover:p-2'>
         <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Completed Orders</p>
@@ -56,7 +63,7 @@ const Misforsub = ({total,pending,processing,complete,hold,thismonth,monthrecord
         </div>
       </div>
       </Link>
-      <Link href=''>
+      <Link href={`/${links}/misreport/hold`}>
       <div className='h-full w-full p-4 hover:p-2'>
       <div className='flex flex-col justify-center items-center h-full w-full border-2 border-slate-400 rounded-lg opacity-2 hover:bg-slate-400'>
           <p className='font-medium text-center'>Hold Orders</p>

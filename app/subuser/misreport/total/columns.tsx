@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -75,6 +76,7 @@ export const columns: ColumnDef<Order>[] = [
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original
+      const lid = payment.id
  
       return (
         <DropdownMenu>
@@ -92,7 +94,7 @@ export const columns: ColumnDef<Order>[] = [
               Copy Order ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem><Link href={`/subuser/misreport/total/${lid}`}>View the order details as a pdf</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

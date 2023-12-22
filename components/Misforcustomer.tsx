@@ -71,8 +71,8 @@ const Misforcustomer = async ({total,pending,processing,complete,hold,thismonth,
         </div>
       </div>
       </Link>
-      <div className='row-span-3 col-span-4 p-4 hover:p-2'>
-        <div className='flex flex-col justify-center items-center h-full w-full border-2 rounded-lg opacity-2 hover:bg-slate-400'>
+      <div className='row-span-3 col-span-4 p-4'>
+        <div className='flex flex-col justify-center items-center h-full w-full border-2 rounded-lg opacity-2 hover:bg-slate-400  hover:p-2'>
           
           <Cusbarchart monthdata={monthrecords}/>
           
