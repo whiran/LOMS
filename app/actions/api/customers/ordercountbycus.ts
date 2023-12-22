@@ -215,3 +215,58 @@ export const getcountofordersthismonth = async(id:string) => {
     return 0;
   }
 }
+
+export const getcountofordersthismonthdatearray = async(id:string) => {
+  try{
+    const currentDate = new Date();
+    const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+    const orderCount = await prisma.user.findMany({
+      where: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+      select:{
+        order: {
+          select:{
+            createdAt: true,
+          }
+        }
+      }
+    });
+
+    let subids:Date[] = [];
+
+    orderCount.forEach((order) => {
+      order.order.forEach((o) => {
+        subids.push(o.createdAt)
+      })
+    })
+
+    const admincount = await prisma.order.findMany({
+      where: {
+        userid: id,
+        createdAt: {
+          gte: startOfMonth.toISOString(),
+          lte: endOfMonth.toISOString(),
+        },
+      },
+      select: {
+        createdAt: true,
+      }
+    });
+
+   
+
+    const cusoids:Date[] = admincount.map(resu => resu.createdAt);
+
+    //concat all dates
+
+    const lastdates = cusoids.concat(subids);
+
+    return lastdates
+  }catch(error){
+    console.log('error on get completed orderes cus and sub count');
+    return [];
+  }
+}

@@ -26,9 +26,10 @@ import { Toaster } from "@/components/ui/toaster";
       <Sidebar />
     </div>
     <main className="md:pl-72 lg:pl-[20%]">
+
       {children}
+      
     </main>
-    <Toaster />
   </>
   );
 }
