@@ -57,10 +57,9 @@ type Art = {
  id:string
 }
 enum State {
-  pending = 'pending',
-  processing = 'processing',
-  completed = 'completed',
-  hold = 'hold',
+  conform = 'conform',
+  notconform = 'notconform',
+  cancelled = 'cancelled',
 }
 
 
@@ -84,7 +83,7 @@ const Artwork = (props: Props) => {
     washsymbol: '',
     size: '',
     qty: 0,
-    state: State.pending
+    state: State.notconform
   });
   const strokref = useRef<HTMLInputElement>(null);
   const connoref = useRef<HTMLInputElement>(null);
@@ -109,7 +108,7 @@ const Artwork = (props: Props) => {
       washsymbol: washsymbolref.current?.value as string ?? '',
       size: sizeref.current?.value as string ?? '',
       qty: Number(qtyref.current?.value) ?? 0, 
-      state: sateref.current?.value as State ?? 'pending',
+      state: sateref.current?.value as State ?? 'notconform',
     })
   }
    
@@ -121,12 +120,13 @@ const Artwork = (props: Props) => {
 
  //fetch the stroke data
  useEffect(() => {
+   if(props.strokedata.length > 0){
      setStrokes(props.strokedata);
      setStrokeno(props.strokedata[0].strokeno);
      setContracts(props.strokedata[0].contractNumbers);
      setContractno(props.strokedata[0].contractNumbers[0]);
      
-
+   }
   
 }, []); // Added props.strokedata to the dependency array
 

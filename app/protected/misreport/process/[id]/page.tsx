@@ -7,7 +7,7 @@ type Props = {}
 const page = async ({ params }: { params: { id: string } }) => {
 
   const result = await getorderdata(params.id);
-  console.log('in id page p')
+
   
   return (
     <div>

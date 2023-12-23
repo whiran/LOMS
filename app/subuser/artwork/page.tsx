@@ -7,6 +7,7 @@ import { getstrokedata } from '@/app/actions/api/getstrokedata';
 import { getcreatedusersstrokes, getstrokeandconadmin } from '@/app/actions/api/customers/getcreatedusersstrokes';
 import Artworkforcustomer from '@/components/Artworkforcustomer';
 import Artworkforsubuser from '@/components/ARtworkforsubuser';
+import { getstrokeandconsbyadmin } from '@/app/actions/api/subuser/getthestrokesandconsbyadmin';
 
 
 type Props = {}
@@ -23,7 +24,9 @@ type all = {
 const Page = async (props: Props) => {
   const session = await getServerSession(authOptions);
   const userid:string = session?.user.id as string
-  const strokedata:all[] = await getstrokeandconadmin(userid);
+  const strokedata:all[] = await getstrokeandconsbyadmin(userid);
+
+  console.log('strokedata',strokedata);
  
   //view the art work main page
 

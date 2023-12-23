@@ -1,9 +1,9 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import {state} from '@prisma/client'
+import {Orderfromuser} from '@prisma/client'
 
-export const updateorderbyadmin = async (id: string,stroke: string,conno: string, coo: string, fiber: string, component: string, caretext: string, washsymbol: string, size: string, orderState: state, qty: number) => {
+export const updateorderbyadmin = async (id: string,stroke: string,conno: string, coo: string, fiber: string, component: string, caretext: string, washsymbol: string, size: string, orderState: Orderfromuser, qty: number) => {
   try{
 
 
@@ -22,7 +22,7 @@ export const updateorderbyadmin = async (id: string,stroke: string,conno: string
       caretext,
       washsimbol: washsymbol,
       sizeration: size,
-      state: orderState, 
+      orderstatefromuser: orderState, 
       qty,
     }
   });

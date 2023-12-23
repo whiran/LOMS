@@ -15,7 +15,7 @@ const Page = () => {
   return (
   <div className="h-full">
     <div className="h-[9vh]">
-    <Mainnavbar />
+    <Navbar />
     </div>
      <main className="grid grid-cols-1 grid-rows-4  bg-slate-100 h-[91vh] ">
      <div className='flex border-8 bg-white  border-white rounded-sm m-1 relative'>

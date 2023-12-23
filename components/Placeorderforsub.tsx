@@ -50,33 +50,42 @@ useEffect(() => {
 
   
   const handleclick = async() => {
-    setProcessing(true);
-    const result = await placeordersub(strokeno,conno,coo,fiber,component,caretext,washsimbol,sizeration,props.id,qty,state);
-   
-    if(result == 'ok'){
-      toast({
-        title: " successfully aded the record..",
-        description: "Order details added.",
-      });
-      // Clear the form fields after successful submission
-      setCoo('');
-      setFiber('');
-      setComponent('');
-      setCaretext('');
-      setWashsimbol('');
-      setSizeration('');
-      setQty(0);
-
-    }else{
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Something went wrong from the serverside!",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-      setProcessing(false);
-    }
-    setProcessing(false);
+    if(strokeno != '' && conno != ''&& coo != '' && fiber != '' && component != '' && caretext != '' && washsimbol != '' && sizeration && state != ''){
+        setProcessing(true);
+        const result = await placeordersub(strokeno,conno,coo,fiber,component,caretext,washsimbol,sizeration,props.id,qty,state);
+       
+        if(result == 'ok'){
+          toast({
+            title: " successfully aded the record..",
+            description: "Order details added.",
+          });
+          // Clear the form fields after successful submission
+          setCoo('');
+          setFiber('');
+          setComponent('');
+          setCaretext('');
+          setWashsimbol('');
+          setSizeration('');
+          setQty(0);
+    
+        }else{
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Something went wrong from the serverside!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+          setProcessing(false);
+        }
+        setProcessing(false);
+      }else {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please fill all fields!",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
   }
   return (
     <div className=" bg-[#F8DFD4] p-6 border-4 border-white rounded-lg">

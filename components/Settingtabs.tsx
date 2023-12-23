@@ -71,42 +71,58 @@ const Settingtabs = (props: Props) => {
     setEmail('');
     setNEmail(''); 
     setProcessing1(false);
+  }else {
+    toast({
+      variant: "destructive",
+      title: "Uh oh! Something went wrong.",
+      description: "Please fill the new email address!",
+      action: <ToastAction altText="Try again">Try again</ToastAction>,
+    })
   }
   }
 
   const changepass = async () => {
-    setProcessing2(true);
-    const result = await updatepassworduser(session?.user.id as string, password, npass);
-    if(result == 'ok'){
-      toast({
-        title: " successfully updated the record..",
-        description: "Password changed.",
-      });
-      setPassword('');
-      setNpass('');
-    }else if(result == 'no'){
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Something went wrong from the serverside!",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    }else if( result == 'notsame'){
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Please provide the correct current password.",
-        description: "Try again withe correct password!",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    }else if(result == 'error'){
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Something went wrong from the serverside!",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-    }
-    setProcessing2(false);
+    if(password != '' && npass != ''){
+        setProcessing2(true);
+        const result = await updatepassworduser(session?.user.id as string, password, npass);
+        if(result == 'ok'){
+          toast({
+            title: " successfully updated the record..",
+            description: "Password changed.",
+          });
+          setPassword('');
+          setNpass('');
+        }else if(result == 'no'){
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Something went wrong from the serverside!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        }else if( result == 'notsame'){
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Please provide the correct current password.",
+            description: "Try again withe correct password!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        }else if(result == 'error'){
+          toast({
+            variant: "destructive",
+            title: "Uh oh! Something went wrong.",
+            description: "Something went wrong from the serverside!",
+            action: <ToastAction altText="Try again">Try again</ToastAction>,
+          })
+        }
+        setProcessing2(false);
+      }else {
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please fill the both new and old password!",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        })
+      }
   }
   return (
     <Tabs defaultValue="account" className="w-full flex sm:flex-col md:flex-row md:h-[50%]">

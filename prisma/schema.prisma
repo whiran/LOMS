@@ -93,10 +93,10 @@ model subuser {
 //orders
 
 model order {
-  id                 String     @id @default(auto()) @map("_id") @db.ObjectId
-  stroke             stroke     @relation(fields: [strokenum], references: [strokeno])
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  stroke             stroke        @relation(fields: [strokenum], references: [strokeno])
   strokenum          String
-  constract          contract   @relation(fields: [contractnum], references: [constractno])
+  constract          contract      @relation(fields: [contractnum], references: [constractno])
   contractnum        String
   coo                String
   fiber              String
@@ -104,18 +104,18 @@ model order {
   caretext           String
   washsimbol         String
   sizeration         String
-  state              state      @default(pending)
+  state              state         @default(pending)
   qty                Int?
-  orderstatefromuser String     @default("notconform")
+  orderstatefromuser Orderfromuser @default(notconform)
   orderqtys          orderqty[]
-  user               user?      @relation(fields: [userid], references: [id])
-  userid             String?    @db.ObjectId
-  customer           customer?  @relation(fields: [cusid], references: [id])
-  cusid              String?    @db.ObjectId
-  subuser            subuser?   @relation(fields: [subid], references: [id])
-  subid              String?    @db.ObjectId
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  user               user?         @relation(fields: [userid], references: [id])
+  userid             String?       @db.ObjectId
+  customer           customer?     @relation(fields: [cusid], references: [id])
+  cusid              String?       @db.ObjectId
+  subuser            subuser?      @relation(fields: [subid], references: [id])
+  subid              String?       @db.ObjectId
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
   ordervalue         Int?
 }
 

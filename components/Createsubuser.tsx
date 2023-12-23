@@ -23,6 +23,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { updatecusdata } from "@/app/actions/api/updatecusdata";
 import { deletecusandsubaccount } from "@/app/actions/api/deletecusandsubacount";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type result = {
   id: string;
@@ -60,24 +62,35 @@ const Createsubuser = (props: Props) => {
   },[props.id, temp])
 
   const handleclick  = async() =>{
-     const result = await createsubuser(email, password,props.id)
-     if(result == 'ok'){
-      toast({
-        title: " successfully created..",
-        description: "account details added.",
-      });
-      setEmail('');
-       setPassword('');
-      setTemp(!temp);
-     }else{
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Something went wrong from the serverside!",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
-     }
-  }
+    if(email != '' && password != ''){
+
+   
+           const result = await createsubuser(email, password,props.id)
+             if(result == 'ok'){
+              toast({
+                title: " successfully created..",
+                description: "account details added.",
+              });
+              setEmail('');
+               setPassword('');
+              setTemp(!temp);
+             }else{
+              toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "Something went wrong from the serverside!",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+              })
+             }
+          }else{
+            toast({
+              variant: "destructive",
+              title: "Uh oh! Something went wrong.",
+              description: "Please fill the both columns!",
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+          }
+        }
   
   const reset = async() => {
     setEmail('');

@@ -130,12 +130,12 @@ const Artworkforsubuser = (props: Props) => {
 
  //fetch the stroke data
  useEffect(() => {
+    if(props.strokedata.length > 0){
      setStrokes(props.strokedata);
      setStrokeno(props.strokedata[0].strokeno);
      setContracts(props.strokedata[0].contractNumbers);
      setContractno(props.strokedata[0].contractNumbers[0]);
-     
-
+    }
   
 }, []); // Added props.strokedata to the dependency array
 
@@ -253,34 +253,44 @@ const submitdata = async() => {
 
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Stroke no:</label><input onChange={(e) => {
                         handleUserUpdate('strkeno',e.target.value)
-                      }} value={artdata.strkeno} type='text' className='rounded-sm w-2/6' /></div>
+                      }} value={artdata.strkeno} type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform}  className='rounded-sm w-2/6' /></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Contract no:</label><input onChange={(e) => {
                         handleUserUpdate('conno',e.target.value)
-                      }} value={artdata.conno} type='text' className='rounded-sm w-2/6' /></div>
+                      }} value={artdata.conno} type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform} className='rounded-sm w-2/6' /></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Coo:</label><input onChange={(e) => {
                         handleUserUpdate('coo',e.target.value)
-                      }} value={artdata.coo} type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.coo} type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform}  className='rounded-sm w-2/6'/></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Fiber:</label><input onChange={(e) => {
                         handleUserUpdate('fiber',e.target.value)
-                      }} value={artdata.fiber}  type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.fiber}  type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform}  className='rounded-sm w-2/6'/></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Component:</label><input onChange={(e) => {
                         handleUserUpdate('component',e.target.value)
-                      }} value={artdata.component} type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.component} type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform}  className='rounded-sm w-2/6'/></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Caretext:</label><input onChange={(e) => {
                         handleUserUpdate('caretext',e.target.value)
-                      }} value={artdata.caretext}  type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.caretext}  type='text' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform}  className='rounded-sm w-2/6'/></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Wash simbol:</label><input onChange={(e) => {
                         handleUserUpdate('washsymbol',e.target.value)
-                      }} value={artdata.washsymbol}  type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.washsymbol}  type='text' className='rounded-sm w-2/6' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform} /></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Size:</label><input onChange={(e) => {
                         handleUserUpdate('size',e.target.value)
-                      }} value={artdata.size} type='text' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.size} type='text' className='rounded-sm w-2/6' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform} /></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>Qty:</label><input onChange={(e) => {
                         handleUserUpdate('qty',parseInt(e.target.value))
-                      }} value={artdata.qty} type='number' className='rounded-sm w-2/6'/></div>
+                      }} value={artdata.qty} type='number' className='rounded-sm w-2/6' // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform} /></div>
                       <div className='flex sm:flex-col md:flex-row w-full justify-around mt-[1px]'><label className='text-left w-2/6'>State:</label><select value={artdata.orderstatefromuser} className='rounded-sm w-2/6' onChange={(e) => {
-                        handleUserUpdate('state',e.target.value as Orderfromuser)
-                      }}><option value="conform">conform</option><option value="notconform">notconform</option>
+                        handleUserUpdate('orderstatefromuser',e.target.value as Orderfromuser)
+                      }} // Disable the input field if orderstatefromuser is 'conform'
+                      disabled={artdata.orderstatefromuser === Orderfromuser.conform} ><option value="conform">conform</option><option value="notconform">notconform</option>
                       <option value="cancelled">cancelled</option>
                       </select></div>
                       

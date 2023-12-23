@@ -93,7 +93,7 @@ export const columns: ColumnDef<Order>[] = [
               Copy Order ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><Link href={`/users/misreport/completed/${payment.id}`}>View the order details as a pdf</Link></DropdownMenuItem>
+            <DropdownMenuItem><Link href={`/users/misreport/total/${payment.id}`}>View the order details as a pdf</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

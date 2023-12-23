@@ -4,6 +4,7 @@ import Mainnavbar from '@/components/Mainnavbar'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { getstrokedata } from '@/app/actions/api/getstrokedata';
+import Navbar from '@/components/Navbar';
 
 
 type Props = {}
@@ -27,7 +28,7 @@ const Page = async (props: Props) => {
     
     <div className="h-screen flex flex-col">
        <div className="h-[9vh]">
-        <Mainnavbar />
+        <Navbar />
        </div>
        <div className='h-full w-full'>
         <Artwork userid={userid} strokedata={strokedata}/>
