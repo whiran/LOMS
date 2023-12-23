@@ -56,15 +56,15 @@ const Navbarsearch = (props: Props) => {
   return (
 
       <div className='flex flex-row w-full justify-end'>
-         <div className='flex flex-row border mx-2 p-1 bg-white text-black rounded-md items-center'>
-            <label>STROKE NO</label>
+         <div className='flex flex-row border mx-2 2xl:mx-4 2xl:p-2 p-1 bg-white text-black rounded-md items-center'>
+            <label className='2xl:text-lg'>STROKE NO</label>
             <input placeholder='  Search ...' onChange={(e) => {e.preventDefault()
                                     setStrokeno(e.target.value)
                                     setState2('');
                                     setState3('');
                                     setState4('');}} className=' text-black w-32 mx-2 hover:opacity-95'/>
             <Save color='currentColor' size={18} onClick={handleInputChange}/>
-            <button className='border hover:bg-[#879cfb] rounded mx-1' onClick={handleSearch} >SEARCH</button>
+            <button className='border hover:bg-[#879cfb] rounded mx-1 2xl:text-lg' onClick={handleSearch} >SEARCH</button>
         </div>
     </div>
   

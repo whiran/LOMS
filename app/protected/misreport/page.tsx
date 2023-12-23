@@ -20,6 +20,7 @@ type Counts = {
     otherlabelCount: number;
     contityCount: number;
 }
+type MonthlyData = { month: number; count: number }[]; 
 const page = async (props: Props) => {
   const session = await getServerSession(authOptions);
   const userid:string = session?.user.id as string
@@ -36,10 +37,12 @@ const page = async (props: Props) => {
   const otherCount = userresults.otherlabelCount
   const quantityCount = userresults.contityCount
 
-  const contractmonths = await  groupbycontractmonth();
-  const caremonths = await groupbyothermonth();
-  const othermonths = await groupbyothermonth();
-  const quntitymonths = await groupbyquantitymonth();
+
+
+  const contractmonths:MonthlyData = await  groupbycontractmonth(userid,'con');
+  const caremonths:MonthlyData = await groupbycontractmonth(userid,'care');
+  const othermonths:MonthlyData = await groupbycontractmonth(userid,'other');
+  const quntitymonths:MonthlyData = await groupbycontractmonth(userid,'qun');
 
  
 

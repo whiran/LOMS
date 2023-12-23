@@ -27,29 +27,135 @@ async function groupDataByMonth(data: any[]) {
 
 
 
-export async function groupbycontractmonth() {
+export async function groupbycontractmonth(id:string,type: string) {
 
   try{
-    const contracts = await prisma.contract.findMany();
+    const strokes = await prisma.stroke.findMany({
+      where: {
+        userid: id,
+      },
+      select: {
+        strokeno: true,
+        createdAt: true,
+        contracts: {
+          select: {
+            constractno: true,
+            createdAt: true,
+            carelabel: {
+              select: {
+                id: true,
+                createdAt: true,
+                otherlabel: {
+                  select: {
+                    id: true,
+                    createdAt: true,
+                    contity: {
+                      select: {
+                        id: true,
+                        createdAt: true,
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+        }
+      }
+    })
+    
 
     const monthsData: { [key: number]: number } = {};
-    contracts.forEach((contract) => {
-      const createdAt = new Date(contract.createdAt);
-      const month = createdAt.getMonth() + 1; // Adding 1 to adjust from 0-indexed to 1-indexed months
+    const cmonthsData: { [key: number]: number } = {};
+    const caremonthsData: { [key: number]: number } = {};
+    const othermonthsData: { [key: number]: number } = {};
+    const qunmonthsData: { [key: number]: number } = {};
+
+    strokes.forEach((strok) => {
+      const createdAt = new Date(strok.createdAt);
+      const month = createdAt.getMonth() + 1;
       if (!monthsData[month]) {
         monthsData[month] = 0;
       }
       monthsData[month]++;
-    });
+      strok.contracts.forEach((con) => {
+        const createdAt = new Date(con.createdAt);
+        const month = createdAt.getMonth() + 1;
+        if (!cmonthsData[month]) {
+          cmonthsData[month] = 0;
+        }
+        cmonthsData[month]++;
+        con.carelabel.forEach((care) => {
+          const createdAt = new Date(care.createdAt);
+          const month = createdAt.getMonth() + 1;
+          if (!caremonthsData[month]) {
+            caremonthsData[month] = 0;
+          }
+          caremonthsData[month]++;
+          care.otherlabel.forEach((other) => {
+            const createdAt = new Date(other.createdAt);
+            const month = createdAt.getMonth() + 1;
+            if (!othermonthsData[month]) {
+              othermonthsData[month] = 0;
+            }
+            othermonthsData[month]++;
+            other.contity.forEach((qun) => {
+              const createdAt = new Date(qun.createdAt);
+              const month = createdAt.getMonth() + 1;
+              if (!qunmonthsData[month]) {
+                qunmonthsData[month] = 0;
+              }
+              qunmonthsData[month]++;
+              })
+          })
+        })
+      })
+    })
 
     // Generate an array with all months of the year and their counts
-    const allMonths: { month: number; count: number }[] = [];
-    for (let i = 1; i <= 12; i++) {
-      const count = monthsData[i] || 0;
-      allMonths.push({ month: i, count });
+    if(type =='stroke'){
+       const sallMonths: { month: number; count: number }[] = [];
+       for (let i = 1; i <= 12; i++) {
+         const count = monthsData[i] || 0;
+         sallMonths.push({ month: i, count });
+       }
+   
+       return sallMonths;
+    }else if(type == 'con'){
+      const callMonths: { month: number; count: number }[] = [];
+       for (let i = 1; i <= 12; i++) {
+         const count = cmonthsData[i] || 0;
+         callMonths.push({ month: i, count });
+       }
+   
+       return callMonths;
+    }else if(type =='care'){
+      const careallMonths: { month: number; count: number }[] = [];
+       for (let i = 1; i <= 12; i++) {
+         const count = caremonthsData[i] || 0;
+         careallMonths.push({ month: i, count });
+       }
+   
+       return careallMonths;
+    }else if(type == 'other'){
+      const otherallMonths: { month: number; count: number }[] = [];
+       for (let i = 1; i <= 12; i++) {
+         const count = othermonthsData[i] || 0;
+         otherallMonths.push({ month: i, count });
+       }
+   
+       return otherallMonths;
+    }else if( type == 'qun'){
+      const qunallMonths: { month: number; count: number }[] = [];
+       for (let i = 1; i <= 12; i++) {
+         const count = qunmonthsData[i] || 0;
+         qunallMonths.push({ month: i, count });
+       }
+   
+       return qunallMonths;
+    }else{
+      return []
     }
-
-    return allMonths;
 
   }catch(error: any){
     console.log(`found a error on get group month contract`)

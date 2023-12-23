@@ -26,7 +26,7 @@ const Page = async (props: Props) => {
   const userid:string = session?.user.id as string
   const strokedata:all[] = await getstrokeandconsbyadmin(userid);
 
-  console.log('strokedata',strokedata);
+  
  
   //view the art work main page
 

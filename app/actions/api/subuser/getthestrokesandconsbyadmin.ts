@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma"
 export const getstrokeandconsbyadmin = async(id:string) => {
 
   try{
+    //cus id from sub side
     const cus = await prisma.user.findUnique({
       where: {
         id:id,
@@ -15,19 +16,25 @@ export const getstrokeandconsbyadmin = async(id:string) => {
         createdby: true,
       }
     });
-
+    
+    const cusid = cus?.createdby as string;
+    
+    //admin id from cus side
     const admin = await prisma.user.findUnique({
       where: {
-        id,
+        id: cusid,
       },
       select: {
         createdby: true,
       }
     });
 
+    //admins storkes
+    const adminid = admin?.createdby as string;
+
     const strokes = await prisma.stroke.findMany({
       where: {
-        userid: id,
+        userid: adminid,
       },
       select: {
         strokeno: true,

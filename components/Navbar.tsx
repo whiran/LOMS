@@ -25,19 +25,19 @@ const Navbar = async (props: Props) => {
   const usertype = session?.user.userType;
 
   return (
-    <div className='flex items-center p-2 bg-[#ADC4CE] text-white text-sm w-full gap-2'>
+    <div className='flex items-center p-2 bg-[#ADC4CE] text-white text-sm 2xl:text-lg w-full gap-2 h-full'>
       <Mobilesidebar apiLimitCount={0} isPro={false}/>
       <Navbarsearch />
       <DropdownMenu>
       <DropdownMenuTrigger  asChild>
-         <Button variant="ghost" className="relative h-8 w-8 rounded-full" >
+         <Button variant="ghost" className="relative h-8 w-8 2xl:h-12 2xl:w-12 rounded-full" >
               <Avatar>
                 <AvatarImage src="/124599.jpeg" alt='user' />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
           </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className='2xl:text-lg'>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>

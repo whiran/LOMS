@@ -36,33 +36,47 @@ export const countstrokes = async (userId: string) => {
     },
   });
 
+  //correct
   const strokeCount: number = result?.strokes?.length ?? 0;
 
+  //correct
   const contractCount: number = result?.strokes?.reduce(
     (sum: number, stroke: { contracts: any[] }) => sum + stroke.contracts.length,
     0
   ) ?? 0;
 
   // Retrieve counts of carelabels, otherlabels, and contities here
-    // For example:
-    const carelabelCount = result?.strokes?.reduce(
-      (sum: number, stroke: { contracts: any[] }) =>
-        sum + stroke.contracts.reduce((careSum, contract) => careSum + (contract.carelabel?.length ?? 0), 0),
-      0
-    ) ?? 0;
+   //correct
+    let carelabelCount: number = 0;
+    let oCount: number = 0;
+    let cCount: number = 0;
 
-    const otherlabelCount = result?.strokes?.reduce(
-      (sum: number, stroke: { contracts: any[] }) =>
-        sum + stroke.contracts.reduce((otherSum, contract) => otherSum + (contract.otherlabel?.length ?? 0), 0),
-      0
-    ) ?? 0;
+    
+  if (result?.strokes) {
+    for (const stroke of result.strokes) {
+      if (stroke.contracts) {
+        for (const contract of stroke.contracts) {
+          if (contract.carelabel) {
+            carelabelCount += contract.carelabel.length;
+          }for(const other of contract.carelabel){
+            if(other.otherlabel){
+              oCount += other.otherlabel.length;
+            }
+            for(const contity of other.otherlabel){
+              if(other.otherlabel){
+                cCount += contity.contity.length;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 
-    const contityCount = result?.strokes?.reduce(
-      (sum: number, stroke: { contracts: any[] }) =>
-        sum + stroke.contracts.reduce((contitySum, contract) => contitySum + (contract.contity?.length ?? 0), 0),
-      0
-    ) ?? 0;
+ 
+    const otherlabelCount = oCount;
 
+    const contityCount = cCount;
  
     return {
       contractCount,
