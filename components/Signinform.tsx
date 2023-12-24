@@ -78,7 +78,7 @@ useEffect(() => {
       
       <button onClick={handleSubmit}  className='bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded'>Sign in</button>
 
-      <p className='text-red-600'>{message}</p>
+      <p className='text-red-600 text-center'>{message}</p>
     </div>
   )
 }
