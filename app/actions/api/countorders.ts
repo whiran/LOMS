@@ -3,25 +3,151 @@ import prisma from "@/lib/prisma";
 import { count } from "console";
 
 //count orders
-
-export async function totalcount() {
+//totoal of 3 user levels based on admin
+export const totalcount =async (id: string) => {
   try{
-    const counts = await prisma.order.count();
-    return counts;
-    
+    //get the customers created by the user and get the count of total orders.
+    const cuscount = await prisma.user.findMany({
+      where: {
+        createdby: id
+      },
+      select: {
+        id: true,
+        order: {
+          select: {
+            id: true,
+          }
+        },
+        subusers: {
+          select: {
+            ownid: true,
+            orders: {
+              select: {
+                id: true,
+              }
+            }
+          }
+        }
+      }
+    })
+  
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+      },
+    });
+
+   
+    let totalsubusercount = 0;
+
+
+
+    let totalOrderCount = 0;
+
+    cuscount.forEach((user) => {
+        totalOrderCount += user.order.length;
+    });
+
+   
+
+    cuscount.forEach((user) => {
+      user.subusers.forEach((u) => {
+        totalsubusercount += u.orders.length;
+      })
+  });
+
+
+
+    const ordercountoftheuser = await prisma.order.count({
+      where: {
+        userid: id,
+      }
+    })
+    const total = totalOrderCount + ordercountoftheuser + totalsubusercount;
+     return total;
+   
   }catch(error){
-    console.log('error getting the total count of orders');
+    console.log('error in count total orders in server side')
     return 0;
+   
   }
 }
 
-export async function getorderprocessing(){
+//processing all orders based on admin
+export async function getorderprocessing(id: string){
   try{
-    const counts = await prisma.order.count({
-      where:{
-        state: "processing"
-      }
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+        state: 'processing',
+      },
     });
+
+    const ordersofcustomers = orderCount._count.id
+    //by subuser
+    const cuscount = await prisma.user.findMany({
+      where: {
+        createdby: id
+      },
+      select: {
+        id: true,
+        order: {
+          select: {
+            id: true,
+          }
+        },
+        subusers: {
+          select: {
+            ownid: true,
+            orders: {
+              select: {
+                id: true,
+                state: true,
+              }
+            }
+          }
+        }
+      }
+    })
+
+    let totalsubusercount = 0;
+
+    cuscount.forEach((user) => {
+      user.subusers.forEach((u) => {
+        u.orders.forEach((s) => {
+          if(s.state == 'processing'){
+            totalsubusercount ++;
+          }
+        })
+      })
+  });
+
+ 
+
+
+    //by admin
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        state: 'processing'
+      }
+    })
+
+    
+    
+
+    const counts = admincount + ordersofcustomers + totalsubusercount;
+
     return counts;
   }catch(errr){
     console.log(errr);
@@ -29,30 +155,157 @@ export async function getorderprocessing(){
   }
 }
 
-export async function getorderpending() {
+
+//get all pendding orders based on admin
+export async function getorderpending(id:string) {
   try{
-    const resut = await prisma.order.count({
-      where:{
-        state: "pending"
+    // admin's customers order count
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+        state: 'pending',
+      },
+    });
+    
+        //by subuser
+        const cuscount = await prisma.user.findMany({
+          where: {
+            createdby: id
+          },
+          select: {
+            id: true,
+            order: {
+              select: {
+                id: true,
+              }
+            },
+            subusers: {
+              select: {
+                ownid: true,
+                orders: {
+                  select: {
+                    id: true,
+                    state: true,
+                  }
+                }
+              }
+            }
+          }
+        })
+    
+        let totalsubusercount = 0;
+    
+        cuscount.forEach((user) => {
+          user.subusers.forEach((u) => {
+            u.orders.forEach((s) => {
+              if(s.state == "pending"){
+                totalsubusercount ++;
+              }
+            })
+          })
+      });
+    
+     
+    
+
+    const ordersofcustomers = orderCount._count.id
+
+    //admin's order count
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        state: 'pending'
       }
     })
-    return resut;
+
+    //totoal
+    const counts = admincount + ordersofcustomers + totalsubusercount;
+
+    return counts;
   }catch(error){
     console.log('error on get penging orderes');
     return 0;
   }
 }
 
-export async function getordercomplete() {
+
+//get completed all orders based on admin
+export async function getordercomplete(id:string) {
   try{
-    const resut = await prisma.order.count({
-      where:{
-        state: "completed"
+
+    //by customer
+    const orderCount = await prisma.order.aggregate({
+      _count: {
+        id: true, // Counting the 'id' field of the Order model
+      },
+      where: {
+        user: {
+          createdby: id, // Filter condition for users with userType as specified
+        },
+        state: 'completed',
+      },
+    });
+
+    const ordersofcustomers = orderCount._count.id
+
+        //by subuser
+        const cuscount = await prisma.user.findMany({
+          where: {
+            createdby: id
+          },
+          select: {
+            id: true,
+            order: {
+              select: {
+                id: true,
+              }
+            },
+            subusers: {
+              select: {
+                ownid: true,
+                orders: {
+                  select: {
+                    id: true,
+                    state: true,
+                  }
+                }
+              }
+            }
+          }
+        })
+    
+        let totalsubusercount = 0;
+    
+        cuscount.forEach((user) => {
+          user.subusers.forEach((u) => {
+            u.orders.forEach((s) => {
+              if(s.state == "completed"){
+                totalsubusercount ++;
+              }
+            })
+          })
+      });
+    
+    
+ 
+    //by admin
+    const admincount = await prisma.order.count({
+      where: {
+        userid: id,
+        state: 'completed'
       }
     })
-    return resut;
+
+    const counts = admincount + ordersofcustomers + totalsubusercount;
+
+    return counts;
   }catch(error){
-    console.log('error on get processing orderes count');
+    console.log('error on get completed orderes count');
     return 0;
   }
 }

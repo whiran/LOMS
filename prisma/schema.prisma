@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["selectRelationCount"]
 }
 
 datasource db {
@@ -10,28 +11,129 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//users
+
 enum UserRoles {
   admin
   user
-  manager
-  company
+  subuser
+}
+
+enum Orderfromuser {
+  conform
+  notconform
+  cancelled
 }
 
 model user {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  email      String       @unique
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  email      String      @unique
   password   String
-  userType   UserRoles    @default(user)
-  companies  company[]
-  normaluser normaluser[]
+  userType   UserRoles   @default(admin)
+  normaluser normaluser?
+  customers  customer[]
   order      order[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  createdby  String?     @db.ObjectId //this is only when customers and subusers
+  strokes    stroke[]
+  subusers   subuser[]
+}
+
+model normaluser {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  firstname String
+  lastname  String
+  pnum      String
+  sa        String
+  sl        String
+  city      String
+  post      String
+  country   String
+  region    String
+  email     String
+  password  String
+  user      user?      @relation(fields: [userid], references: [id])
+  userid    String?    @unique @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  customers customer[]
+}
+
+model customer {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  normaluser normaluser @relation(fields: [createdby], references: [id])
+  userType   UserRoles  @default(user)
+  email      String     @unique
+  password   String
+  user       user       @relation(fields: [createdby], references: [id])
+  createdby  String     @db.ObjectId
+  ownid      String     @unique @db.ObjectId
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  subusers   subuser[]
+  orders     order[]
+}
+
+model subuser {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  customer        customer  @relation(fields: [createdby], references: [id])
+  createdby       String    @db.ObjectId
+  user            user      @relation(fields: [createdbyuserid], references: [id])
+  createdbyuserid String    @db.ObjectId
+  email           String    @unique
+  userType        UserRoles @default(subuser)
+  ownid           String    @unique @db.ObjectId
+  password        String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          order[]
+}
+
+//orders
+
+model order {
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  stroke             stroke        @relation(fields: [strokenum], references: [strokeno])
+  strokenum          String
+  constract          contract      @relation(fields: [contractnum], references: [constractno])
+  contractnum        String
+  coo                String
+  fiber              String
+  component          String
+  caretext           String
+  washsimbol         String
+  sizeration         String
+  state              state         @default(pending)
+  qty                Int?
+  orderstatefromuser Orderfromuser @default(notconform)
+  orderqtys          orderqty[]
+  user               user?         @relation(fields: [userid], references: [id])
+  userid             String?       @db.ObjectId
+  customer           customer?     @relation(fields: [cusid], references: [id])
+  cusid              String?       @db.ObjectId
+  subuser            subuser?      @relation(fields: [subid], references: [id])
+  subid              String?       @db.ObjectId
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  ordervalue         Int?
+}
+
+enum state {
+  pending
+  processing
+  completed
+  hold
 }
 
 model stroke {
   strokeno  String     @id @map("_id")
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  contract  contract[]
+  contracts contract[]
+  user      user?      @relation(fields: [userid], references: [id])
+  userid    String?    @db.ObjectId
+  orders    order[]
 }
 
 model contract {
@@ -46,6 +148,7 @@ model contract {
   updatedAt   DateTime    @updatedAt
   carelabel   carelabel[]
   art         art[]
+  orders      order[]
 }
 
 model carelabel {
@@ -111,6 +214,8 @@ model label {
   recordcount String
   runnumber   String
   strokes     strokexml[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model strokexml {
@@ -170,44 +275,8 @@ model upc {
   sizeid        String @db.ObjectId
 }
 
-model order {
-  id         String     @id @default(auto()) @map("_id") @db.ObjectId
-  coo        String
-  fiber      String
-  component  String
-  caretext   String
-  washsimbol String
-  sizeration String
-  state      state      @default(pending)
-  orderqtys  orderqty[]
-  user       user       @relation(fields: [userid], references: [id])
-  userid     String     @db.ObjectId
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  ordervalue Int?
-}
-
-model normaluser {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  firstname String
-  lastname  String
-  pnum      String
-  sa        String
-  sl        String
-  city      String
-  post      String
-  country   String
-  region    String
-  email     String
-  password  String
-  user      user?    @relation(fields: [userid], references: [id])
-  userid    String?  @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model company {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   firstname String
   lastname  String
   bname     String
@@ -220,16 +289,9 @@ model company {
   region    String
   email     String
   password  String
-  user      user?    @relation(fields: [userid], references: [id])
-  userid    String?  @db.ObjectId
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-enum state {
-  pending
-  processing
-  completed
 }
 
 model orderqty {

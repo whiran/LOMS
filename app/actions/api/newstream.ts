@@ -284,8 +284,7 @@ export const newstream = async (fielname: string)=>{
   });
 
   parser.on('end',async () => {
-    console.log('start');
-    console.log(`open count ${count} stroke count ${strokecount}`);
+   
     
     // $env:NODE_OPTIONS="--max_old_space_size=8096"
     const labelnumber = await createlabel(label.date,label.time,label['record-count'],label['run-number']);
@@ -355,7 +354,7 @@ export const newstream = async (fielname: string)=>{
 
       }
       
-      console.log(`for loop worked`)
+     
     }
     await looptheobject();
     console.log('end');

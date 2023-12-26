@@ -40,7 +40,7 @@ export const companysignup = async (firstname:string,lastname: string,bname: str
     data: {
       email,
       password: passwordU,
-      userType: UserRoles.company,
+      userType: UserRoles.admin,
     },
   });
 

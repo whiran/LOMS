@@ -18,17 +18,17 @@ type Other = {
 export default  function Otherdata() {
   const [others, setOthers] = useState<Other[]>([]);
   const {state2,state3, setState3, inputState3, setInputState3, setState4} = useMyContext();
-  console.log('setother is running...')
+
 
   const handleRowClick = (id: string) => {
-    console.log('Clicked on care number:', id);
+
     setState3(id);
     setState4('000000000000000000000000');
   };
-  console.log(state3);
+
   
   useEffect(() => {
-    console.log('useEffect is running on other!')
+
     const fetchCare = async () => {
       const fetchedOthers = await getother(state2);
       const sortedOther = [...fetchedOthers].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());

@@ -20,7 +20,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 type MonthlyData = { month: number; count: number }[]; 
@@ -72,13 +72,13 @@ const Allbarchart = (props: Props) => {
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
       {
-        labels: 'Other',
+        label: 'Other',
         data: otherdata.map(item => item.count),
         borderColor: 'rgb(217, 235, 53)',
         backgroundColor: 'rgba(217, 235, 53,0.5)'
       },
       {
-        labels: 'Quantity',
+        label: 'Quantity',
         data: quntitydata.map(item => item.count),
         bordercolor: 'rgb(75, 27, 247)',
         backgroundColor: 'rgba(75, 27, 247,0.5)'

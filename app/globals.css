@@ -89,3 +89,49 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+/*for the tel input */
+
+.react-tel-input {
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+}
+
+
+.form-control {
+  width: 100% !important;
+ }
+ /* Media query for large screens (min-width: 1024px) */
+ @media (min-width: 1024px) {
+
+ 
+  .normal {
+    width: 20rem; /* Equivalent to lg:w-80 in Tailwind */
+  }
+
+ 
+
+  .form-control {
+   height: 3.5rem !important;
+   width: 100% !important;
+   font-size: 1.175rem !important;
+  }
+
+  .react-tel-input {
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+  }
+ 
+}
+
+/* Media query for extra large screens (min-width: 1280px) */
+@media (min-width: 1280px) {
+  .react-tel-input {
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+  }
+
+  .bignormal{
+    width: 33.3333%; /* Equivalent to xl:w-4/12 in Tailwind */
+  }
+}
